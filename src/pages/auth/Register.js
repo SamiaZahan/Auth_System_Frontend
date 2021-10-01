@@ -10,6 +10,7 @@ function Register(props) {
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
+    const [isFormShowing, setIsFormShowing] = useState(true);
     const findFormErrors = () => {
         const newErrors = {}
         // name errors
@@ -37,6 +38,7 @@ function Register(props) {
                    setSuccessMessage(result.data.message)
                     setIsErrorMessage(false)
                     setIsSuccessMessage(true)
+                    setIsFormShowing(false)
                 })
                 .catch((error) =>{
                     setErrorMessage(error.response.data.message);
@@ -62,20 +64,24 @@ function Register(props) {
                 <div  className="container">
                     <div className="row justify-content-center">
                         <div  id="myform" className="col-4 mt-5 mb-5 p-4 pt-3 pb-3 rounded" style={{background: "#ffffff"}}>
+                            {isFormShowing &&
+                            <div>
+                                <h5 id="form-header" className="mt-3 mb-3">Sign Up to continue</h5>
+                            </div>
+                            }
+                            {successMessage && isSuccessMessage &&
+                            <div className="alert alert-success mb-3 mt-2 p-2 text-center" role="alert">
+                                {successMessage}
+                            </div>
+                            }
+                            {errorMessage && isErrorMessage &&
+                            <div className="alert alert-danger mb-3 mt-2 p-2 text-center" role="alert">
+                                {errorMessage}
+                            </div>
+                            }
+
+                            { isFormShowing &&
                             <form onSubmit={Registration}>
-                                <div>
-                                    <h5 id="form-header" className="mt-3 mb-3">Sign Up to continue</h5>
-                                </div>
-                                {successMessage && isSuccessMessage &&
-                                <div className="alert alert-success mb-3 mt-2 p-2 text-center" role="alert">
-                                    {successMessage}
-                                </div>
-                                }
-                                {errorMessage && isErrorMessage &&
-                                <div className="alert alert-danger mb-3 mt-2 p-2 text-center" role="alert">
-                                    {errorMessage}
-                                </div>
-                                }
                     {/*            <div className="d-grid gap-2 mt-4">
                                     <a href="https://airbringr.com/auth/facebook"
                                        className="btn btn-block text-white" style={{background: "#4569ad"}}>
@@ -135,6 +141,7 @@ function Register(props) {
                                     </Link>
                                 </div>
                             </form>
+                            }
                         </div>
                     </div>
                 </div>
