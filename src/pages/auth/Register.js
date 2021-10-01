@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 import {API_BASE_URL} from "../../constants/ApiConstants";
 
@@ -63,7 +63,7 @@ function Register(props) {
             <section id="airbringr-background">
                 <div  className="container">
                     <div className="row justify-content-center">
-                        <div  id="myform" className="col-4 mt-5 mb-5 p-4 pt-3 pb-3 rounded" style={{background: "#ffffff"}}>
+                        <div  id="myform" className="col-lg-4 col-md-6 col-sm-6 mt-5 mb-5 p-4 pt-3 pb-3 rounded" style={{background: "#ffffff"}}>
                             {isFormShowing &&
                             <div>
                                 <h5 id="form-header" className="mt-3 mb-3">Sign Up to continue</h5>

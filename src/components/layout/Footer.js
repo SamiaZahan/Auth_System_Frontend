@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import pay_with_filename from '../images/pay_with_filename_1611589671029.png';
-import payment_methods from '../images/payment_methods_filename_1611589671029.png';
+import pay_with_filename from '../../assets/images/pay_with_filename_1611589671029.png';
+import payment_methods from '../../assets/images/payment_methods_filename_1611589671029.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faInstagramSquare, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
 
@@ -75,17 +75,17 @@ function Footer() {
                             <h3 className="footer-header">CONNECT WITH US</h3>
                             <div className="hstack gap-3 fs-1">
                                 <div>
-                                    <a href="https://www.facebook.com/Linkirbringr/" target="_blank" style={{'text-decoration': 'none', color: '#fff'}}>
+                                    <a href="https://www.facebook.com/Linkirbringr/" target="_blank" rel="noreferrer" style={{'text-decoration': 'none', color: '#fff'}}>
                                         <FontAwesomeIcon icon={faFacebookSquare} />
                                     </a>
                                 </div>
                                 <div>
-                                    <a href="https://www.youtube.com/channel/UCkZ89G0-AMy45O93mDWuEHw" target="_blank" style={{'text-decoration': 'none', color: '#fff'}}>
+                                    <a href="https://www.youtube.com/channel/UCkZ89G0-AMy45O93mDWuEHw" target="_blank" rel="noreferrer" style={{'text-decoration': 'none', color: '#fff'}}>
                                         <FontAwesomeIcon icon={faYoutubeSquare} />
                                     </a>
                                 </div>
                                 <div>
-                                    <a href="https://www.instagram.com/Linkir.bringr/" target="_blank" style={{'text-decoration': 'none', color: '#fff'}}>
+                                    <a href="https://www.instagram.com/Linkir.bringr/" target="_blank" rel="noreferrer" style={{'text-decoration': 'none', color: '#fff'}}>
                                         <FontAwesomeIcon icon={faInstagramSquare} />
                                     </a>
                                 </div>

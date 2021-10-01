@@ -1,6 +1,6 @@
 #airbringr-background {
   background-color: #34a1f4;
-  background-image: url(./components/images/product-details-bg.png), linear-gradient(to bottom, #28aefc, #2088f2);
+  background-image: url(./assets/images/product-details-bg.png), linear-gradient(to bottom, #28aefc, #2088f2);
 }
 #form-header {
   font-family: "Montserrat", sans-serif;
