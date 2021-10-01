@@ -1,0 +1,40 @@
+#airbringr-background {
+  background-color: #34a1f4;
+  background-image: url(./components/images/product-details-bg.png), linear-gradient(to bottom, #28aefc, #2088f2);
+}
+#form-header {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.footer-header {
+  font-size: 15px;
+}
+.footer-widget {
+  font-size: 12px;
+  line-height: 20px;
+  color: #d7d9da;
+}
+
+
+.footer-socials{
+  /*list-style: none;*/
+  /*list-style-position: inside;*/
+  /*padding-left: 0;*/
+}
+
+label{
+  background-color: #fff;
+  padding: 0 5px;
+  margin: 0 10px;
+  font-size: 13px;
+}
+#myform .form-control {
+  background-color: transparent !important;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: -10px;
+  color: #000000;
+  border: 1px solid #d5d8dc;
+}
