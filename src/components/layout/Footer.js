@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import pay_with_filename from '../../assets/images/pay_with_filename_1611589671029.png';
-import payment_methods from '../../assets/images/payment_methods_filename_1611589671029.png';
+import pay_with_filename from '../../image/pay_with_filename_1611589671029.png';
+import payment_methods from '../../image/payment_methods_filename_1611589671029.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faInstagramSquare, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
 
