@@ -87,7 +87,7 @@ function Login() {
             <section id="airbringr-background">
                 <div className="container">
                     <div className="row justify-content-center">
-                        <div id="myform" className="col-4 mt-5 mb-5 p-4 pt-3 pb-3 rounded"
+                        <div id="myform" className="col-lg-4 col-md-6 col-sm-6 mt-5 mb-5 p-4 pt-3 pb-3 rounded"
                              style={{background: "#ffffff"}}>
                             <div>
                                 <h5 id="form-header" className="mt-3 mb-3">Sign In to continue</h5>
