@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_BASE_URL} from "../../constants/ApiConstants";
 import {queries} from "@testing-library/react";
 
 function Verification(props) {
+    const history = useHistory();
     let q = new URLSearchParams(window.location.search)
     let qAuth = q.get("auth")
     let qOtp = parseInt(q.get("otp"))
     const [data] = useState({auth: qAuth, otp: qOtp})
     const [message, setMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isSuccessMessage, setIsSuccessMessage] = useState(false);
+    const [isErrorMessage, setIsErrorMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(true)
     const [showVerificationForm, setShowVerificationForm] = useState(false)
     const [showOtpSubmissionForm, setShowOtpSubmissionForm] = useState(false)
@@ -18,13 +23,16 @@ function Verification(props) {
         const data1 = {auth: data.auth, otp: data.otp};
         axios.post(API_BASE_URL + '/v1/verify-email', data1)
             .then((result) => {
-                console.log("dfsvfd", result)
-                setMessage(result.data.message)
                 setShowVerificationForm(true)
+                setSuccessMessage(result.data.message)
+                setIsErrorMessage(false)
+                setIsSuccessMessage(true)
             })
-            .catch((error) => {
-                console.log("eroor message check ....", error.response)
-                setMessage(error.response.data.message)
+            .catch(function (error) {
+                console.log("error check", error.response.data)
+                setErrorMessage(error.response.data.message);
+                setIsSuccessMessage(false)
+                setIsErrorMessage(true)
             })
             .finally(() => setIsLoading(false))
     }
@@ -46,10 +54,15 @@ function Verification(props) {
             .then(function (response) {
                 setShowVerificationForm(false)
                 setShowOtpSubmissionForm(true)
-                console.log(response.data)
+                setSuccessMessage(response.data.message)
+                setIsErrorMessage(false)
+                setIsSuccessMessage(true)
             })
             .catch(function (error) {
-                alert(error.response.data.message.toUpperCase());
+                console.log("error check", error.response.data)
+                setErrorMessage(error.response.data.message);
+                setIsSuccessMessage(false)
+                setIsErrorMessage(true)
             });
 
     }
@@ -67,12 +80,19 @@ function Verification(props) {
 
         axios.post(API_BASE_URL + "/v1/verify-mobile", {mobile, otp: parseInt(otp), auth: qAuth})
             .then(function (response) {
+                console.log("verify message", response.data)
                 setShowVerificationForm(false)
                 setShowOtpSubmissionForm(false)
-                console.log(response.data)
+                setSuccessMessage(response.data.message)
+                setIsSuccessMessage(true)
+                setIsErrorMessage(false)
+                history.push('/login')
             })
             .catch(function (error) {
-                alert(error.response.data.message.toUpperCase());
+                console.log("error check", error.response.data)
+                setErrorMessage(error.response.data.message);
+                setIsErrorMessage(true)
+                setIsSuccessMessage(false)
             });
 
     }
@@ -82,35 +102,39 @@ function Verification(props) {
         <>
             <div id="airbringr-background" className="container-fluid">
                 <div className="row justify-content-center">
-                    <div id="myform" className="col-4 mt-5 p-5 alert-success mb-5 text-center"
+                    <div id="myform" className="col-4 mt-5 p-4 alert-success mb-5 text-center"
                          style={{background: "#ffffff"}}>
-                        {isLoading ? "Loading" :
-                            <div className="alert alert-success p-2 text-center" role="alert">
-                                {message.toUpperCase()}
+                        { successMessage && isSuccessMessage &&
+                            <div className="alert alert-success p-2 m-0 text-center" role="alert">
+                                {successMessage.toUpperCase()}
                             </div>
                         }
-
-                        <div className="pt-4 text-center" style={{background: "#ffffff"}}>
+                        {errorMessage && isErrorMessage &&
+                            <div className="alert alert-danger p-2 m-0 text-center" role="alert">
+                                {errorMessage.toUpperCase()}
+                            </div>
+                        }
+                        <div className="text-center" style={{background: "#ffffff"}}>
                             {showVerificationForm ?
-                                <form onSubmit={sendOTP}>
+                                <form onSubmit={sendOTP} className="mt-5">
                                     <div className="form-group">
                                         <input type="number" className="form-control" id="phone"
                                                placeholder="Enter phone" onChange={e => setMobile(e.target.value)}/>
                                     </div>
-                                    <button className="btn mt-3 btn-block text-white text-uppercase" type="submit"
-                                            style={{background: "#1ba7f9"}}>Submit</button>
+                                    <button className="btn mt-4 btn-block text-white text-uppercase" type="submit"
+                                            style={{background: "#1ba7f9"}}>Send OTP</button>
                                 </form>
                                 : ""}
                         </div>
-                        <div className="pt-2 text-center" style={{background: "#ffffff"}}>
+                        <div className="text-center" style={{background: "#ffffff"}}>
                             {showOtpSubmissionForm ?
-                                <form onSubmit={verifyMobile}>
+                                <form onSubmit={verifyMobile} className="mt-5">
                                     <div className="form-group">
                                         <input type="number" className="form-control" id="otp"
                                                placeholder="Enter OTP" onChange={e => setOtp(e.target.value)}/>
                                     </div>
-                                    <button className="btn btn-block text-white text-uppercase" type="submit"
-                                            style={{background: "#1ba7f9"}}>Submit</button>
+                                    <button className="btn btn-block text-white mt-4 text-uppercase" type="submit"
+                                            style={{background: "#1ba7f9"}}>Verify Mobile Number</button>
                                 </form>
                                 : ""}
                         </div>

@@ -4,25 +4,30 @@ import axios from "axios";
 import {API_BASE_URL, LEGACY_WEBSITE_URL} from "../../constants/ApiConstants";
 
 function Login() {
-    console.log(LEGACY_WEBSITE_URL)
     const [emailOrPhone, setEmailOrPhone] = useState("");
     const [errMessage, setErrMessage] = useState("");
     const [message, setMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isSuccessMessage, setIsSuccessMessage] = useState(false);
+    const [isErrorMessage, setIsErrorMessage] = useState(false);
     const [otpSent, setOtpSent] = useState(false)
 
     const submitForm = (e) => {
         e.preventDefault();
         if (isPhone(emailOrPhone) || isEmail(emailOrPhone)) {
-            console.log("Login info (email or Phone): " + emailOrPhone);
-
             if (isPhone(emailOrPhone)) {
                 axios.post(API_BASE_URL + '/v1/send-sms-otp', {mobile: emailOrPhone})
                     .then((r) => {
-                        setMessage(r.data.message);
-                        window.location = "https://airbringr.dev/verify-otp/?phone=" + emailOrPhone
+                        setSuccessMessage(r.data.message);
+                        setIsSuccessMessage(true)
+                        setIsErrorMessage(false)
+                        window.location = LEGACY_WEBSITE_URL + '/verify-otp/?phone=' + emailOrPhone
                     })
-                    .catch(e => {
-                        setMessage(e.response.data.message)
+                    .catch(err => {
+                        setErrorMessage(err.response.data.message)
+                        setIsErrorMessage(true)
+                        setIsSuccessMessage(false)
                     })
             }
             if (isEmail(emailOrPhone)) {
@@ -63,30 +68,41 @@ function Login() {
             alert('Please input OTP')
         }
 
-        axios.post('https://airbringr.dev/verify-phone', {phone: emailOrPhone, otp: parseInt(otp)})
+        axios.post(LEGACY_WEBSITE_URL + '/verify-phone', {phone: emailOrPhone, otp: parseInt(otp)})
             .then((r) => {
-                setMessage(r.data.message);
-                window.location = "https://airbringr.dev"
+                setSuccessMessage(r.data.message);
+                setIsSuccessMessage(true)
+                setIsErrorMessage(false)
+                window.location =  LEGACY_WEBSITE_URL
             })
             .catch(err => {
-                setMessage("NO OK")
+                setErrorMessage("NOT OK")
+                setIsErrorMessage(true)
+                setIsSuccessMessage(false)
             })
     }
 
     return (
         <>
-            <div id="airbringr-background" className="container-fluid">
-                <div className="row justify-content-center">
-                    <div id="myform" className="col-3 mt-5 mb-5 rounded" style={{background: "#ffffff"}}>
-                        <div>
-                            <h5 id="form-header" className="mt-3">Sign In to continue</h5>
-                        </div>
-                        {message &&
-                        <div className="alert alert-success m-1 p-1 text-center" role="alert">
-                            {message}
-                        </div>
-                        }
-                        {/*<div className="d-grid gap-2 mt-4">
+            <section id="airbringr-background">
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div id="myform" className="col-4 mt-5 mb-5 p-4 pt-3 pb-3 rounded"
+                             style={{background: "#ffffff"}}>
+                            <div>
+                                <h5 id="form-header" className="mt-3 mb-3">Sign In to continue</h5>
+                            </div>
+                            {successMessage && isSuccessMessage &&
+                            <div className="alert alert-success m-1 p-1 text-center" role="alert">
+                                {successMessage}
+                            </div>
+                            }
+                            {errorMessage && isErrorMessage &&
+                            <div className="alert alert-danger m-1 p-1 text-center" role="alert">
+                                {errorMessage}
+                            </div>
+                            }
+                            {/*<div className="d-grid gap-2 mt-4">
                                 <Link to="https://airbringr.com/auth/facebook"
                                    className="btn btn-block text-white" style={{background: "#4569ad"}}>
                                     <i className="fab fa-facebook-f"></i>
@@ -94,60 +110,63 @@ function Login() {
                                 </Link>
                             </div>*/}
 
-                        {/*<div className="text-center">
+                            {/*<div className="text-center">
                                 or
                             </div>*/}
 
-                        {!otpSent && <form onSubmit={submitForm}>
-                            <div className="form-group mb-3">
-                                <label htmlFor="name">Phone number *</label>
-                                <input
-                                    type="text" className="form-control"
-                                    id="emailOrPhone"
-                                    onChange={e => setEmailOrPhone(e.target.value)}
-                                    required autoFocus autoComplete='off'
-                                />
-                                <div className="text-danger">{errMessage}</div>
-                            </div>
+                            {!otpSent &&
+                            <form onSubmit={submitForm}>
+                                <div className="form-group">
+                                    <label htmlFor="name">Phone number <span style={{color: "red"}}>*</span></label>
+                                    <input
+                                        type="text" className="form-control"
+                                        id="emailOrPhone"
+                                        onChange={e => setEmailOrPhone(e.target.value)}
+                                        required autoFocus autoComplete='off'
+                                    />
+                                    <div className="text-danger">{errMessage}</div>
+                                </div>
 
-                            <div className="d-grid gap-2 mt-4 fst-normal" style={{"font-size": ".1rem"}}>
-                                <button className="btn btn-block text-white text-uppercase" type="submit"
-                                        style={{background: "#1ba7f9"}}>
-                                    Send OTP
-                                </button>
-                            </div>
-                        </form>}
+                                <div className="d-grid gap-2 mt-4 fst-normal" style={{"font-size": ".1rem"}}>
+                                    <button className="btn btn-block btn-custom text-white text-uppercase" type="submit"
+                                            style={{background: "#1ba7f9"}}>
+                                        Send OTP
+                                    </button>
+                                </div>
+                            </form>}
 
-                        {otpSent && <form onSubmit={submitOtp}>
-                            <div className="form-group mb-3">
-                                <label htmlFor="name">OTP *</label>
-                                <input
-                                    type="number" className="form-control"
-                                    id="otp"
-                                    onChange={(e) => setOtp(e.target.value)}
-                                    required autoFocus autoComplete='off'
-                                />
-                                <div className="text-danger">{errMessage}</div>
-                            </div>
+                            {otpSent &&
+                            <form onSubmit={submitOtp}>
+                                <div className="form-group mb-3">
+                                    <label htmlFor="name">OTP <span style={{color: "red"}}>*</span></label>
+                                    <input
+                                        type="number" className="form-control"
+                                        id="otp"
+                                        onChange={(e) => setOtp(e.target.value)}
+                                        required autoFocus autoComplete='off'
+                                    />
+                                    <div className="text-danger">{errMessage}</div>
+                                </div>
 
-                            <div className="d-grid gap-2 mt-4 fst-normal" style={{"font-size": ".1rem"}}>
-                                <button className="btn btn-block text-white text-uppercase" type="submit"
-                                        style={{background: "#1ba7f9"}}>
-                                    Send OTP
-                                </button>
-                            </div>
-                        </form>}
+                                <div className="d-grid gap-2 mt-4 fst-normal" style={{"font-size": ".1rem"}}>
+                                    <button className="btn btn-custom btn-block text-white text-uppercase" type="submit"
+                                            style={{background: "#1ba7f9"}}>
+                                        Send OTP
+                                    </button>
+                                </div>
+                            </form>}
 
-                        <div className="d-grid gap-2 mt-4 mb-4 fst-normal">
-                            <Link to="/register"
-                                  className="btn btn-block text-white border-1 border-secondary text-muted text-uppercase"
-                                  style={{background: "#eceef0"}}>
-                                Not an user? Sign Up
-                            </Link>
+                            <div className="d-grid gap-2  mt-4 mb-4 fst-normal">
+                                <Link to="/register"
+                                      className="btn btn-block btn-custom text-white border-1 border-secondary text-muted text-uppercase"
+                                      style={{background: "#eceef0"}}>
+                                    Not an user? Sign Up
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </>
     );
 }
