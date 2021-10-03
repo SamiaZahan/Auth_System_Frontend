@@ -13,7 +13,6 @@ function Verification(props) {
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
-    const [setIsLoading] = useState(true)
     const [showVerificationForm, setShowVerificationForm] = useState(false)
     const [showOtpSubmissionForm, setShowOtpSubmissionForm] = useState(false)
     const [isLoginButtonShowing, setIsLoginButtonShowing] = useState(false)
@@ -36,7 +35,7 @@ function Verification(props) {
     }
     useEffect(() => {
         Verification()
-    }, [false])
+    })
 
     const [mobile, setMobile] = useState("")
     const [otp, setOtp] = useState("")

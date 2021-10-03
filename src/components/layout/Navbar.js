@@ -15,7 +15,7 @@ function Navbar() {
                     </div>
                     <ul className="navbar-nav flex-row flex-wrap ms-md-auto">
                         <li className="nav-item col-6 col-md-auto">
-                            <a className="btn btn-sm mt-1 text-white" style={{background: "#14567d"}} href="#">
+                            <a target="_blank" rel="noreferrer" className="btn btn-sm mt-1 text-white" style={{background: "#14567d"}} href="https://www.youtube.com/embed/XWhLVlm8FcA">
                                 How to Order
                             </a>
                         </li>
@@ -31,7 +31,7 @@ function Navbar() {
                         </li>
                     </ul>
                     <a className="btn  mx-2 text-white"
-                       href="#">FQA</a>
+                       href="#faq">FQA</a>
                 </div>
             </nav>
         </>

@@ -6,12 +6,11 @@ import {API_BASE_URL, LEGACY_WEBSITE_URL} from "../../constants/ApiConstants";
 function Login() {
     const [emailOrPhone, setEmailOrPhone] = useState("");
     const [errMessage, setErrMessage] = useState("");
-    const [message, setMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
-    const [otpSent, setOtpSent] = useState(false)
+    const [otpSent] = useState(false)
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -31,23 +30,20 @@ function Login() {
                     })
             }
             if (isEmail(emailOrPhone)) {
-                setMessage("We have e-mailed an OPT.");
+                setSuccessMessage("We have e-mailed an OPT.");
             }
             setErrMessage("");
         } else {
             if (/^[0-9]+$/.test(emailOrPhone[0])) {
                 if (!isPhone(emailOrPhone)) {
                     setErrMessage("Enter valid phone number");
-                    setMessage('');
                 }
             } else if (/^[a-z]+$/.test(emailOrPhone[0].toLowerCase())) {
                 if (!isEmail(emailOrPhone)) {
                     setErrMessage("Enter valid email");
-                    setMessage('');
                 }
             } else {
                 setErrMessage("Email format or Phone number is not valid");
-                setMessage('');
             }
 
         }

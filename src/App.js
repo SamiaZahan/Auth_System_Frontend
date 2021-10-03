@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // user defile component
 import Header from "./components/layout/Header";
 import Navbar from "./components/layout/Navbar";
-import SubNavbar from "./components/layout/SubNavbar";
+/*import SubNavbar from "./components/layout/SubNavbar";*/
 import Home from "./pages/home/Home";
 import Register from "./pages/auth/Register";
 import Verification from "./pages/auth/Verification";
@@ -18,7 +18,7 @@ function App() {
           <div>
           <Header></Header>
           <Navbar></Navbar>
-          <SubNavbar></SubNavbar>
+         {/* <SubNavbar></SubNavbar>*/}
           <Switch>
               <Route  path="/" exact component={Home} />
               <Route path="/register" exact component={Register} />
