@@ -3,12 +3,11 @@ import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_BASE_URL} from "../../constants/ApiConstants";
 
-function Verification(props) {
+function Verification() {
     const history = useHistory();
     let q = new URLSearchParams(window.location.search)
     let qAuth = q.get("auth")
     let qOtp = parseInt(q.get("otp"))
-    const [data] = useState({auth: qAuth, otp: qOtp})
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
@@ -17,25 +16,25 @@ function Verification(props) {
     const [showOtpSubmissionForm, setShowOtpSubmissionForm] = useState(false)
     const [isLoginButtonShowing, setIsLoginButtonShowing] = useState(false)
 
-    const Verification = () => {
-        const data1 = {auth: data.auth, otp: data.otp};
-        axios.post(API_BASE_URL + '/v1/verify-email', data1)
-            .then((result) => {
-                setShowVerificationForm(true)
-                setSuccessMessage(result.data.message)
-                setIsErrorMessage(false)
-                setIsSuccessMessage(true)
-            })
-            .catch(function (error) {
-                console.log("error check", error.response.data)
-                setErrorMessage(error.response.data.message);
-                setIsSuccessMessage(false)
-                setIsErrorMessage(true)
-            })
-    }
     useEffect(() => {
+        const Verification = () => {
+            const verifyEmailData = {auth:qAuth, otp: qOtp};
+            axios.post(API_BASE_URL + '/v1/verify-email', verifyEmailData)
+                .then((result) => {
+                    setShowVerificationForm(true)
+                    setSuccessMessage(result.data.message)
+                    setIsSuccessMessage(true)
+                    setIsErrorMessage(false)
+                })
+                .catch(function (error) {
+                    console.log("error check", error.response.data)
+                    setErrorMessage(error.response.data.message);
+                    setIsErrorMessage(true)
+                    setIsSuccessMessage(false)
+                })
+        }
         Verification()
-    })
+    }, [qAuth, qOtp])
 
     const [mobile, setMobile] = useState("")
     const [otp, setOtp] = useState("")
@@ -52,14 +51,14 @@ function Verification(props) {
                 setShowVerificationForm(false)
                 setShowOtpSubmissionForm(true)
                 setSuccessMessage(response.data.message)
-                setIsErrorMessage(false)
                 setIsSuccessMessage(true)
+                setIsErrorMessage(false)
             })
             .catch(function (error) {
                 console.log("error check", error.response.data)
                 setErrorMessage(error.response.data.message);
-                setIsSuccessMessage(false)
                 setIsErrorMessage(true)
+                setIsSuccessMessage(false)
             });
 
     }
