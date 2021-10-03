@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import {API_BASE_URL} from "../../constants/ApiConstants";
 
-function Register(props) {
+function Register() {
     const [data, setData] = useState({ email: '', first_name: '', last_name: '' })
     const [error, setError] = useState({ email: '', first_name: '', last_name: '' })
     const [successMessage, setSuccessMessage] = useState(null);
@@ -66,7 +66,7 @@ function Register(props) {
                         <div  id="myform" className="col-lg-4 col-md-6 col-sm-6 mt-5 mb-5 p-4 pt-3 pb-3 rounded" style={{background: "#ffffff"}}>
                             {isFormShowing &&
                             <div>
-                                <h5 id="form-header" className="mt-3 mb-3">Sign Up to continue</h5>
+                                <h5 id="form-header" className="mt-3 mb-3">Signup to Continue</h5>
                             </div>
                             }
                             {successMessage && isSuccessMessage &&
@@ -94,7 +94,7 @@ function Register(props) {
                                     or
                                 </div>*/}
                                 <div className="form-group mb-3">
-                                    <label htmlFor="first_name">First name <span style={{color: "red"}}>*</span></label>
+                                    <label className="text-capitalize" htmlFor="first_name">First name <span style={{color: "red"}}>*</span></label>
                                     <input
                                         type="text" className="form-control"
                                         id="first_name" name="first_name" autoComplete="off"
@@ -105,7 +105,7 @@ function Register(props) {
                                     <div className="text-danger">{error.first_name}</div>
                                 </div>
                                 <div className="form-group mb-3">
-                                    <label htmlFor="last_name">Last name <span style={{color: "red"}}>*</span></label>
+                                    <label className="text-capitalize" htmlFor="last_name">Last name <span style={{color: "red"}}>*</span></label>
                                     <input
                                         type="text" className="form-control"
                                         id="last_name" name="last_name" autoComplete="off"
@@ -116,7 +116,7 @@ function Register(props) {
                                     <div className="text-danger">{error.last_name}</div>
                                 </div>
                                 <div className="form-group mb-3">
-                                    <label htmlFor="email">Email address <span style={{color: "red"}}>*</span></label>
+                                    <label className="text-capitalize" htmlFor="email">Email address <span style={{color: "red"}}>*</span></label>
                                     <input
                                         type="email" className="form-control"
                                         id="email" name="email" autoComplete="off"
