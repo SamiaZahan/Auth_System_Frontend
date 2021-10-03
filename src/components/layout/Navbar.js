@@ -1,13 +1,19 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {LEGACY_WEBSITE_URL} from "../../constants/ApiConstants";
 
 function Navbar() {
+    const goToHome = (e) => {
+        e.preventDefault()
+        window.location = LEGACY_WEBSITE_URL
+    }
     return (
         <>
             <nav className="py-2 sticky-top" style={{background: "#28aefc"}} aria-label="Secondary navigation">
-                <div className="container-fluid d-flex align-items-md-center" style={{height:"54px", padding:"8px 16px"}}>
+                <div className="container-fluid d-flex align-items-md-center"
+                     style={{height: "54px", padding: "8px 16px"}}>
                     <div>
-                        <Link className="navbar-brand mx-3" to="/">
+                        <Link className="navbar-brand mx-3" onClick={goToHome}>
                             <img className="img-fluid" style={{width: "7.5rem"}}
                                  src="https://airbringr-assets.s3-ap-southeast-1.amazonaws.com/brandpanel/logo/1611564466122-white.png"
                                  alt=""/>
