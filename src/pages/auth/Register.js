@@ -1,30 +1,30 @@
-import React, {useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {API_BASE_URL} from "../../constants/ApiConstants";
 
 function Register() {
     const [data, setData] = useState({ email: '', first_name: '', last_name: '' })
-    const [error, setError] = useState({ email: '', first_name: '', last_name: '' })
+    const [error, setError] = useReducer((state, action) => {
+        if (action.type === 'set') {
+            return {...state, ...action.data}
+        }
+    }, { email: '', first_name: '', last_name: '' })
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
     const [isFormShowing, setIsFormShowing] = useState(true);
+
     const findFormErrors = () => {
-        const newErrors = {}
-        // name errors
-        if ( isFirstName(data.first_name)) newErrors.first_name = 'First Name should have minimum 2 characters!'
-       /*else if (!isFirstName(data.first_name.length > 2)) newErrors.first_name = 'First Name should have minimum 3 characters'*/
-        // last name errors
-        if ( isLastName(data.last_name)) newErrors.last_name = 'Last Name should have minimum 2 characters!'
-        // email errors
-        if ( !isEmail(data.email)) newErrors.email = 'Please valid email!'
-        return newErrors
+        (data.first_name === '' || !nameValidation(data.first_name)) ? setError({type: 'set', data: {first_name: 'Firstname should have minimum 2 letters(A-Za-z)'}}) : setError({type: 'set', data: {first_name: null}});
+        (data.last_name === '' || !nameValidation(data.last_name)) ? setError({type: 'set', data: {last_name: 'Lastname should have minimum 2 letters(A-Za-z)'}}) : setError({type: 'set', data: {last_name: null}});
+        (!isEmail(data.email)) ? setError({type: 'set', data: {email: 'Please input a valid email'}}) : setError({type: 'set', data: {email: null}});
     }
+
     const Registration = (e) => {
         e.preventDefault();
-        const newErrors = findFormErrors()
+        const newErrors = null
         // Conditional logic:
         if ( Object.keys(newErrors).length > 0 ) {
             // We got errors!
@@ -41,7 +41,7 @@ function Register() {
                     setIsSuccessMessage(true)
                     setIsFormShowing(false)
                 })
-                .catch((error) =>{
+                .catch((error) => {
                     setErrorMessage(error.response.data.message);
                     setIsSuccessMessage(false)
                     setIsErrorMessage(true)
@@ -49,25 +49,29 @@ function Register() {
         }
 
     }
-    const isFirstName = (value) => {
-        return (value.length < 2);
-    }
-    const isLastName = (value) => {
-        return (value.length < 2);
+
+    const nameValidation = (val) => {
+        let regex = /^[a-zA-Z]{2,}$/
+        return regex.test(val)
     }
     const isEmail = (value) => {
         const mailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         return mailFormat.test(value);
     }
     const onChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        setData({...data, [e.target.name]: e.target.value});
     }
+
+    useEffect(() => {
+        findFormErrors()
+    }, [data])
     return (
         <>
             <section id="airbringr-background">
-                <div  className="container">
+                <div className="container">
                     <div className="row justify-content-center">
-                        <div  id="myform" className="col-lg-4 col-md-6 col-sm-6 mt-5 mb-5 p-4 pt-3 pb-3 rounded" style={{background: "#ffffff"}}>
+                        <div id="myform" className="col-lg-4 col-md-6 col-sm-6 mt-5 mb-5 p-4 pt-3 pb-3 rounded"
+                             style={{background: "#ffffff"}}>
                             {isFormShowing &&
                             <div>
                                 <h5 id="form-header" className="mt-3 mb-3">Signup to Continue</h5>
