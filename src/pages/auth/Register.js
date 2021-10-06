@@ -14,12 +14,12 @@ function Register() {
     const findFormErrors = () => {
         const newErrors = {}
         // name errors
-        if ( !isName(data.first_name)) newErrors.first_name = 'Name cannot be blank!'
+        if ( !isFirstName(data.first_name)) newErrors.first_name = 'First Name should have minimum 2 characters!'
+       /*else if (!isFirstName(data.first_name.length > 2)) newErrors.first_name = 'First Name should have minimum 3 characters'*/
+        // last name errors
+        if ( !isLastName(data.last_name)) newErrors.last_name = 'Last Name should have minimum 2 characters!'
         // email errors
         if ( !isEmail(data.email)) newErrors.email = 'Please valid email!'
-        // last name errors
-        if ( !isName(data.last_name)) newErrors.last_name = 'cannot be blank!'
-
         return newErrors
     }
     const Registration = (e) => {
@@ -48,8 +48,11 @@ function Register() {
         }
 
     }
-    const isName = (value) => {
-        return (value.length > 4);
+    const isFirstName = (value) => {
+        return (value.length > 2);
+    }
+    const isLastName = (value) => {
+        return (value.length > 2);
     }
     const isEmail = (value) => {
         const mailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
