@@ -14,10 +14,10 @@ function Register() {
     const findFormErrors = () => {
         const newErrors = {}
         // name errors
-        if ( !isFirstName(data.first_name)) newErrors.first_name = 'First Name should have minimum 2 characters!'
+        if ( isFirstName(data.first_name)) newErrors.first_name = 'First Name should have minimum 2 characters!'
        /*else if (!isFirstName(data.first_name.length > 2)) newErrors.first_name = 'First Name should have minimum 3 characters'*/
         // last name errors
-        if ( !isLastName(data.last_name)) newErrors.last_name = 'Last Name should have minimum 2 characters!'
+        if ( isLastName(data.last_name)) newErrors.last_name = 'Last Name should have minimum 2 characters!'
         // email errors
         if ( !isEmail(data.email)) newErrors.email = 'Please valid email!'
         return newErrors
@@ -31,6 +31,7 @@ function Register() {
             setError(newErrors)
         } else {
             // No errors! Put any logic here for the form submission!
+            setError(newErrors)
             const data1 = { email: data.email, first_name: data.first_name, last_name: data.last_name };
             axios.post(API_BASE_URL + '/v1/signup', data1)
                 .then((result) => {
@@ -49,10 +50,10 @@ function Register() {
 
     }
     const isFirstName = (value) => {
-        return (value.length > 2);
+        return (value.length < 2);
     }
     const isLastName = (value) => {
-        return (value.length > 2);
+        return (value.length < 2);
     }
     const isEmail = (value) => {
         const mailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -105,7 +106,10 @@ function Register() {
                                         onChange={onChange}
                                         required autoFocus
                                     />
-                                    <div className="text-danger">{error.first_name}</div>
+                                    {
+                                        error.first_name &&
+                                        <div className="text-danger">{error.first_name}</div>
+                                    }
                                 </div>
                                 <div className="form-group mb-3">
                                     <label className="text-capitalize" htmlFor="last_name">Last name <span style={{color: "red"}}>*</span></label>
@@ -116,7 +120,10 @@ function Register() {
                                         onChange={onChange}
                                         required autoFocus
                                     />
-                                    <div className="text-danger">{error.last_name}</div>
+                                    {
+                                        error.last_name &&
+                                        <div className="text-danger">{error.last_name}</div>
+                                    }
                                 </div>
                                 <div className="form-group mb-3">
                                     <label className="text-capitalize" htmlFor="email">Email address <span style={{color: "red"}}>*</span></label>
