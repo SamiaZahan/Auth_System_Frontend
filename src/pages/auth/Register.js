@@ -20,30 +20,18 @@ function Register() {
 
     const Registration = (e) => {
         e.preventDefault();
-        const newErrors = null
-        // Conditional logic:
-        if (Object.keys(newErrors).length > 0) {
-            // We got errors!
-            setError(newErrors)
-        } else {
-            // No errors! Put any logic here for the form submission!
-            setError(newErrors)
-            const data1 = { email: data.email, first_name: data.first_name, last_name: data.last_name };
-            axios.post(API_BASE_URL + '/v1/signup', data1)
-                .then((result) => {
-                    console.log("success message", result.data.message)
-                    setSuccessMessage(result.data.message)
-                    setIsErrorMessage(false)
-                    setIsSuccessMessage(true)
-                    setIsFormShowing(false)
-                })
-                .catch((error) => {
-                    setErrorMessage(error.response.data.message);
-                    setIsSuccessMessage(false)
-                    setIsErrorMessage(true)
-                })
-        }
-
+        axios.post(API_BASE_URL + '/v1/signup', data)
+            .then((result) => {
+                setSuccessMessage(result.data.message)
+                setIsErrorMessage(false)
+                setIsSuccessMessage(true)
+                setIsFormShowing(false)
+            })
+            .catch((error) => {
+                setErrorMessage(error.response.data.message);
+                setIsSuccessMessage(false)
+                setIsErrorMessage(true)
+            })
     }
 
     const nameValidation = (val) => {
