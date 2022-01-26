@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../constants/ApiConstants";
 
 function Register() {
-    const [data, setData] = useState({ email: '', first_name: '', last_name: '' });
+    const [data, setData] = useState({first_name: '', last_name: '', email: '', password: ''});
     const [startValidation, setStartValidation] = useState(false);
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -16,19 +16,18 @@ function Register() {
         if (action.type === 'set') {
             return { ...state, ...action.data }
         }
-    }, { email: '', first_name: '', last_name: '' })
-
+    }, {first_name: '', last_name: '' , email: '', password: ''})
     const Registration = (e) => {
         e.preventDefault();
         axios.post(API_BASE_URL + '/v1/signup', data)
             .then((result) => {
-                setSuccessMessage(result.data.message)
+                // setSuccessMessage(result.data.message)
                 setIsErrorMessage(false)
                 setIsSuccessMessage(true)
                 setIsFormShowing(false)
             })
             .catch((error) => {
-                setErrorMessage(error.response.data.message);
+                // setErrorMessage(error.response.data.message);
                 setIsSuccessMessage(false)
                 setIsErrorMessage(true)
             })
@@ -126,9 +125,21 @@ function Register() {
                                         />
                                         <div className="text-danger">{error.email}</div>
                                     </div>
+                                    <div className="form-group mb-3">
+                                        <label className="text-capitalize" htmlFor="email">Password <span style={{ color: "red" }}>*</span></label>
+                                        <input
+                                            type="password" className="form-control"
+                                            id="password" name="password" autoComplete="off"
+                                            onChange={onChange}
+                                            required
+                                        />
+                                        <div className="text-danger">{error.email}</div>
+                                    </div>
 
                                     <div className="d-grid gap-2 mt-4">
-                                        <button className="btn btn-custom btn-block text-white text-uppercase" style={{ background: "#1ba7f9" }}>
+                                        <button className="btn btn-custom btn-block text-white text-uppercase"
+                                         type="submit"
+                                         style={{ background: "#1ba7f9" }}>
                                             Sign Up
                                         </button>
                                     </div>
