@@ -17,8 +17,8 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errMessage, setErrMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState(null);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
     const [otpSent] = useState(false)
@@ -35,7 +35,8 @@ function Login() {
                         window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data
                     })
                     .catch(err => {
-                        // setErrorMessage(err.response.data.message)
+                        setErrorMessage(err.response.message)
+                        setErrMessage(err.response.message)
                         setIsErrorMessage(true)
                         setIsSuccessMessage(false)
                     })
@@ -53,7 +54,8 @@ function Login() {
                     window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data.code
                 })
                 .catch(err => {
-                    // setErrorMessage(err.response.data.message)
+                    setErrorMessage(err.response.data.message)
+                    setErrMessage(err.response.data.message)
                     setIsErrorMessage(true)
                     setIsSuccessMessage(false)
                 })
