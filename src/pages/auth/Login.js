@@ -50,7 +50,7 @@ function Login() {
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
                     // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + email
-                    window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data
+                    window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data.code
                 })
                 .catch(err => {
                     // setErrorMessage(err.response.data.message)
