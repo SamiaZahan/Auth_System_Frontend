@@ -21,13 +21,13 @@ function Register() {
         e.preventDefault();
         axios.post(API_BASE_URL + '/v1/signup', data)
             .then((result) => {
-                // setSuccessMessage(result.data.message)
+                setSuccessMessage(result.message)
                 setIsErrorMessage(false)
                 setIsSuccessMessage(true)
                 setIsFormShowing(false)
             })
             .catch((error) => {
-                // setErrorMessage(error.response.data.message);
+                setErrorMessage(error.response.message);
                 setIsSuccessMessage(false)
                 setIsErrorMessage(true)
             })
