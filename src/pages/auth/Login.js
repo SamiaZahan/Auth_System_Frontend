@@ -28,11 +28,11 @@ function Login() {
         e.preventDefault();
                 axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: phoneNumber,password: password, country_prefix: "880"})
                     .then((r) => {
-                        // setSuccessMessage(r.data.message);
+                        setSuccessMessage(r.message);
                         setIsSuccessMessage(true)
                         setIsErrorMessage(false)
                         // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + phoneNumber
-                        // window.location = "http://13.251.21.132:8081/forced-login/?code=eyJlbWFpbF9vcl9tb2JpbGUiOiIwMTY4NTU1MzgzOCIsInBhc3N3b3JkIjoiQWJjMTIzNDU2In0="
+                        window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data
                     })
                     .catch(err => {
                         // setErrorMessage(err.response.data.message)
@@ -46,10 +46,11 @@ function Login() {
        
             axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: email,password: password, country_prefix: ""})
                 .then((r) => {
-                    // setSuccessMessage(r.data.message);
+                    setSuccessMessage(r.message);
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
                     // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + email
+                    window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data
                 })
                 .catch(err => {
                     // setErrorMessage(err.response.data.message)
