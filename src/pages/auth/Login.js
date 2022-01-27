@@ -35,8 +35,8 @@ function Login() {
                         window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data
                     })
                     .catch(err => {
-                        setErrorMessage(err.response.message)
-                        setErrMessage(err.response.message)
+                        setErrorMessage("Login Failed")
+                        setErrMessage(err.message)
                         setIsErrorMessage(true)
                         setIsSuccessMessage(false)
                     })
@@ -54,8 +54,8 @@ function Login() {
                     window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data.code
                 })
                 .catch(err => {
-                    setErrorMessage(err.response.data.message)
-                    setErrMessage(err.response.data.message)
+                    setErrorMessage("Login Failed")
+                    setErrMessage(err.message)
                     setIsErrorMessage(true)
                     setIsSuccessMessage(false)
                 })
@@ -103,7 +103,7 @@ function Login() {
                                     <form onSubmit={submitPhoneNumber}>
                                         <div className="form-group">
                                             <label className="text-capitalize" htmlFor="name">Mobile number <span
-                                     s           style={{color: "red"}}>*</span></label>
+                                               style={{color: "red"}}>*</span></label>
                                             <input
                                                 type="tel" className="form-control"
                                                 id="emailOrPhone"
