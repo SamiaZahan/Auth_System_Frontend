@@ -28,7 +28,7 @@ function Login() {
                         setIsSuccessMessage(true)
                         setIsErrorMessage(false)
                         // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + phoneNumber
-                        window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data.code
+                        window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.code
                     })
                     .catch(err => {
                         console.log(err.response.data.message)
@@ -52,15 +52,16 @@ function Login() {
         setIsErrorMessage(false)
         axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: email,password: password, country_prefix: ""})
                 .then((r) => {
-                    console.log(r.data.message)
+                    console.log(r)
                     setSuccessMessage(r.message);
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
                     // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + email
-                    window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data.code
+                    window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
+                    
+                    
                 })
                 .catch(err => {
-                    console.log(err.response.data.message)
                     setErrorMessage(err.response.data.message)
                     setErrMessage(err.response.data.message)
                     setIsErrorMessage(true)
