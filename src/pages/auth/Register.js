@@ -19,18 +19,21 @@ function Register() {
     }, {first_name: '', last_name: '' , email: '', password: ''})
     const Registration = (e) => {
         e.preventDefault();
-        axios.post(API_BASE_URL + '/v1/signup', data)
+        
+            axios.post(API_BASE_URL + '/v1/signup', data)
             .then((result) => {
-                setSuccessMessage(result.message)
+                setSuccessMessage(result.data.message)
                 setIsErrorMessage(false)
                 setIsSuccessMessage(true)
                 setIsFormShowing(false)
             })
             .catch((error) => {
-                setErrorMessage(error.response.message);
+                setErrorMessage(error.response.data.message);
                 setIsSuccessMessage(false)
                 setIsErrorMessage(true)
             })
+        
+     
     }
 
     const nameValidation = (val) => {
@@ -51,6 +54,7 @@ function Register() {
             (!nameValidation(data.first_name)) ? setError({ type: 'set', data: { first_name: 'Firstname should have minimum 2 letters(A-Za-z)' } }) : setError({ type: 'set', data: { first_name: null } });
             (!nameValidation(data.last_name)) ? setError({ type: 'set', data: { last_name: 'Lastname should have minimum 2 letters(A-Za-z)' } }) : setError({ type: 'set', data: { last_name: null } });
             (!isEmail(data.email)) ? setError({ type: 'set', data: { email: 'Please input a valid email' } }) : setError({ type: 'set', data: { email: null } });
+            (data.password.length<8)? setError({ type: 'set', data: { password: 'Please input a password more than 8 char' } }) : setError({ type: 'set', data: { password: null } });
         }
     }, [data, startValidation])
     return (
@@ -78,17 +82,7 @@ function Register() {
 
                             {isFormShowing &&
                                 <form onSubmit={Registration}>
-                                    {/*            <div className="d-grid gap-2 mt-4">
-                                    <a href="https://airbringr.com/auth/facebook"
-                                       className="btn btn-block text-white" style={{background: "#4569ad"}}>
-                                        <i className="fab fa-facebook-f"></i>
-                                        Sign Up with Facebook
-                                    </a>
-                                </div>
 
-                                <div className="text-center">
-                                    or
-                                </div>*/}
                                     <div className="form-group mb-3">
                                         <label className="text-capitalize" htmlFor="first_name">First name <span style={{ color: "red" }}>*</span></label>
                                         <input
@@ -126,15 +120,20 @@ function Register() {
                                         <div className="text-danger">{error.email}</div>
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label className="text-capitalize" htmlFor="email">Password <span style={{ color: "red" }}>*</span></label>
+                                        <label className="text-capitalize" htmlFor="password">Password <span style={{ color: "red" }}>*</span></label>
                                         <input
                                             type="password" className="form-control"
                                             id="password" name="password" autoComplete="off"
                                             onChange={onChange}
                                             required
                                         />
-                                        <div className="text-danger">{error.email}</div>
+                                        {
+                                             error.password &&
+                                            <div className="text-danger">{error.password}</div>
+
+                                        }
                                     </div>
+                                   
 
                                     <div className="d-grid gap-2 mt-4">
                                         <button className="btn btn-custom btn-block text-white text-uppercase"
