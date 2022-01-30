@@ -19,6 +19,7 @@ function Login() {
     const [otpSent] = useState(false);
     
     const submitPhoneNumber = (e) => {
+        setIsErrorMessage(false)
         e.preventDefault();        
         if(isPhone(phoneNumber)){
                 axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: phoneNumber,password: password, country_prefix: "880"})
@@ -48,7 +49,7 @@ function Login() {
 
     const submitEmail = (e) => {
         e.preventDefault();
-      
+        setIsErrorMessage(false)
         axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: email,password: password, country_prefix: ""})
                 .then((r) => {
                     console.log(r.data.message)
@@ -94,13 +95,17 @@ function Login() {
                                 <li style={{width: "50%"}} className="nav-item" role="presentation">
                                     <button style={{width: "100%"}} className="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-home" type="button" role="tab"
-                                            aria-controls="pills-home" aria-selected="true">Mobile Number
+                                            aria-controls="pills-home" 
+                                            onClick={ ()=>setIsErrorMessage(false)}
+                                            aria-selected="true">Mobile Number
                                     </button>
                                 </li>
                                 <li style={{width: "50%"}} className="nav-item" role="presentation">
                                     <button style={{width: "100%"}} className="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-profile" type="button" role="tab"
-                                            aria-controls="pills-profile" aria-selected="false">Email
+                                            aria-controls="pills-profile" 
+                                            onClick={ ()=>setIsErrorMessage(false)}
+                                            aria-selected="false">Email
                                     </button>
                                 </li>
                             </ul>
