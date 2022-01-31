@@ -22,13 +22,13 @@ function Register() {
         
             axios.post(API_BASE_URL + '/v1/signup', data)
             .then((result) => {
-                setSuccessMessage(result.data.message)
+                setSuccessMessage(result.data.message.toUpperCase())
                 setIsErrorMessage(false)
                 setIsSuccessMessage(true)
                 setIsFormShowing(false)
             })
             .catch((error) => {
-                setErrorMessage(error.response.data.message);
+                setErrorMessage(error.response.data.message.toUpperCase());
                 setIsSuccessMessage(false)
                 setIsErrorMessage(true)
             })
