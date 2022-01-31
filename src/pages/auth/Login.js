@@ -4,16 +4,11 @@ import axios from "axios";
 import {API_BASE_URL, LEGACY_WEBSITE_URL} from "../../constants/ApiConstants";
 
 function Login() {
-    // const isPhone = (value) => {
-    //     const phoneFormat = /^[0-9]+$/;
-    //     return (phoneFormat.test(value) && (value.length === 11));
-    // }
-    // const isEmail = (value) => {
-    //     const mailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    //     return mailFormat.test(value);
-    
+    const isPhone = (value) => {
+        const phoneFormat = /^[0-9]+$/;
+        return (phoneFormat.test(value) && (value.length === 11));
+    }
     const [phoneNumber, setPhone] = useState("");
-    // const [countryPrefix, setCountryPrefix] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errMessage, setErrMessage] = useState("");
@@ -21,44 +16,59 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
-    const [otpSent] = useState(false)
+    const [otpSent] = useState(false);
     
-
     const submitPhoneNumber = (e) => {
-        e.preventDefault();
+        setIsErrorMessage(false)
+        e.preventDefault();        
+        if(isPhone(phoneNumber)){
                 axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: phoneNumber,password: password, country_prefix: "880"})
                     .then((r) => {
-                        setSuccessMessage(r.message);
+                        setSuccessMessage(r.data.message);
                         setIsSuccessMessage(true)
                         setIsErrorMessage(false)
                         // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + phoneNumber
-                        window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data
+                        window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.code
                     })
                     .catch(err => {
-                        setErrorMessage("Login Failed")
-                        setErrMessage(err.message)
+                        console.log(err.response.data.message)
+                        setErrorMessage(err.response.data.message)
+                        setErrMessage(err.response.data.message)
                         setIsErrorMessage(true)
                         setIsSuccessMessage(false)
                     })
+                
+                }
+        else{
+            setErrorMessage("Enter a valid phone number")
+            setIsErrorMessage(true)
+        }      
     }
+    
+    
 
     const submitEmail = (e) => {
         e.preventDefault();
-       
-            axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: email,password: password, country_prefix: ""})
+        setIsErrorMessage(false)
+        axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: email,password: password, country_prefix: ""})
                 .then((r) => {
+                    console.log(r)
                     setSuccessMessage(r.message);
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
                     // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + email
-                    window.location = LEGACY_WEBSITE_URL + '/forced-login/?code='+ r.data.code
+                    window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
+                    
+                    
                 })
                 .catch(err => {
-                    setErrorMessage("Login Failed")
-                    setErrMessage(err.message)
+                    setErrorMessage(err.response.data.message)
+                    setErrMessage(err.response.data.message)
                     setIsErrorMessage(true)
                     setIsSuccessMessage(false)
                 })
+      
+            
     }
 
     return (
@@ -86,13 +96,17 @@ function Login() {
                                 <li style={{width: "50%"}} className="nav-item" role="presentation">
                                     <button style={{width: "100%"}} className="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-home" type="button" role="tab"
-                                            aria-controls="pills-home" aria-selected="true">Mobile Number
+                                            aria-controls="pills-home" 
+                                            onClick={ ()=>setIsErrorMessage(false)}
+                                            aria-selected="true">Mobile Number
                                     </button>
                                 </li>
                                 <li style={{width: "50%"}} className="nav-item" role="presentation">
                                     <button style={{width: "100%"}} className="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-profile" type="button" role="tab"
-                                            aria-controls="pills-profile" aria-selected="false">Email
+                                            aria-controls="pills-profile" 
+                                            onClick={ ()=>setIsErrorMessage(false)}
+                                            aria-selected="false">Email
                                     </button>
                                 </li>
                             </ul>
@@ -108,10 +122,9 @@ function Login() {
                                                 type="tel" className="form-control"
                                                 id="emailOrPhone"
                                                 onBlur={e => setPhone(e.target.value)}
-                                               
                                                 required autoFocus autoComplete='off'
                                             />
-
+                                         
                                             {/* <PhoneInput
                                                 international
                                                 countryCallingCodeEditable={false}
@@ -128,7 +141,7 @@ function Login() {
                                                 required autoFocus autoComplete='off'
                                             />
                                           
-                                            <div className="text-danger">{errMessage}</div>
+                                            {/* <div className="text-danger">{errMessage}</div> */}
                                         </div>
 
                                         <div className="d-grid gap-2 mt-4 fst-normal"
@@ -164,7 +177,7 @@ function Login() {
                                                 onChange={e => setPassword(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
-                                            <div className="text-danger">{errMessage}</div>
+                                            
                                         </div>
 
                                         <div className="d-grid gap-2 mt-4 fst-normal"
