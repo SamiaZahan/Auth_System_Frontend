@@ -11,7 +11,6 @@ function Login() {
     const [phoneNumber, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const [errMessage, setErrMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
