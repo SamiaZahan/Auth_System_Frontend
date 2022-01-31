@@ -11,7 +11,6 @@ function Login() {
     const [phoneNumber, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errMessage, setErrMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
@@ -33,7 +32,6 @@ function Login() {
                     .catch(err => {
                         console.log(err.response.data.message)
                         setErrorMessage(err.response.data.message)
-                        setErrMessage(err.response.data.message)
                         setIsErrorMessage(true)
                         setIsSuccessMessage(false)
                     })
@@ -63,7 +61,6 @@ function Login() {
                 })
                 .catch(err => {
                     setErrorMessage(err.response.data.message)
-                    setErrMessage(err.response.data.message)
                     setIsErrorMessage(true)
                     setIsSuccessMessage(false)
                 })
@@ -140,8 +137,6 @@ function Login() {
                                                 onChange={e => setPassword(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
-                                          
-                                            {/* <div className="text-danger">{errMessage}</div> */}
                                         </div>
 
                                         <div className="d-grid gap-2 mt-4 fst-normal"
