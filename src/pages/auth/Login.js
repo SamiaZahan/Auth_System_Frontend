@@ -32,7 +32,6 @@ function Login() {
                     .catch(err => {
                         console.log(err.response.data.message)
                         setErrorMessage(err.response.data.message)
-                        // setErrMessage(err.response.data.message)
                         setIsErrorMessage(true)
                         setIsSuccessMessage(false)
                     })
@@ -62,7 +61,6 @@ function Login() {
                 })
                 .catch(err => {
                     setErrorMessage(err.response.data.message)
-                    // setErrMessage(err.response.data.message)
                     setIsErrorMessage(true)
                     setIsSuccessMessage(false)
                 })
