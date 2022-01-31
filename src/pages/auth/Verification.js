@@ -21,7 +21,6 @@ function Verification() {
             const verifyEmailData = {auth:qAuth, otp: qOtp};
             axios.post(API_BASE_URL + '/v1/verify-email', verifyEmailData)
                 .then((result) => {
-                    console.log(result)
                     setShowVerificationForm(true)
                     setSuccessMessage(result.data.message)
                     setIsSuccessMessage(true)

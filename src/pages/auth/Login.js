@@ -23,22 +23,22 @@ function Login() {
         if(isPhone(phoneNumber)){
                 axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: phoneNumber,password: password, country_prefix: "880"})
                     .then((r) => {
-                        setSuccessMessage(r.data.message);
+                        setSuccessMessage(r.data.message.toUpperCase());
                         setIsSuccessMessage(true)
                         setIsErrorMessage(false)
                         // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + phoneNumber
                         window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.code
                     })
                     .catch(err => {
-                        console.log(err.response.data.message)
-                        setErrorMessage(err.response.data.message)
+                        // console.log(err.response.data.message)
+                        setErrorMessage(err.response.data.message.toUpperCase())
                         setIsErrorMessage(true)
                         setIsSuccessMessage(false)
                     })
                 
                 }
         else{
-            setErrorMessage("Enter a valid phone number")
+            setErrorMessage("ENTER A VALID PHONE NUMBER")
             setIsErrorMessage(true)
         }      
     }
@@ -51,7 +51,7 @@ function Login() {
         axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: email,password: password, country_prefix: ""})
                 .then((r) => {
                     console.log(r)
-                    setSuccessMessage(r.message);
+                    setSuccessMessage(r.message.toUpperCase());
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
                     // window.location = LEGACY_WEBSITE_URL + '/verify-otp/?email_or_mobile=' + email
@@ -60,14 +60,17 @@ function Login() {
                     
                 })
                 .catch(err => {
-                    setErrorMessage(err.response.data.message)
+                    setErrorMessage(err.response.data.message.toUpperCase())
                     setIsErrorMessage(true)
                     setIsSuccessMessage(false)
                 })
       
             
     }
-
+    const onClick  =  () =>{
+        setIsErrorMessage(false) ;
+    }
+  
     return (
         <>
             <section id="airbringr-background">
@@ -94,7 +97,7 @@ function Login() {
                                     <button style={{width: "100%"}} className="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-home" type="button" role="tab"
                                             aria-controls="pills-home" 
-                                            onClick={ ()=>setIsErrorMessage(false)}
+                                            onClick={onClick}
                                             aria-selected="true">Mobile Number
                                     </button>
                                 </li>
@@ -102,7 +105,7 @@ function Login() {
                                     <button style={{width: "100%"}} className="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-profile" type="button" role="tab"
                                             aria-controls="pills-profile" 
-                                            onClick={ ()=>setIsErrorMessage(false)}
+                                            onClick={onClick}
                                             aria-selected="false">Email
                                     </button>
                                 </li>
@@ -202,6 +205,8 @@ function Login() {
             </section>
         </>
     );
+   
 }
+
 
 export default Login;
