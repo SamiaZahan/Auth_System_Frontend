@@ -157,6 +157,13 @@ function Login() {
                                                 onChange={e => setPassword(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
+                                             <div >
+                                                <Link to="/reset"
+                                                    className="text-uppercase"
+                                                    style={{background: "#eceef0","font-size": ".8rem"}}>
+                                                    Forget  Password?
+                                                </Link>
+                                            </div>
                                         </div>
 
                                         <div className="d-grid gap-2 mt-4 fst-normal"
@@ -192,6 +199,13 @@ function Login() {
                                                 onChange={e => setPassword(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
+                                            <div >
+                                                <Link to="/reset"
+                                                    className="text-uppercase"
+                                                    style={{background: "#eceef0","font-size": ".8rem"}}>
+                                                    Forget  Password?
+                                                </Link>
+                                            </div>
                                             
                                         </div>
 

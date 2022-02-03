@@ -8,7 +8,7 @@ function Reset() {
     const submitForm = (e) => {
         e.preventDefault();
         if (isEmail(email)) {
-            console.log("User email: " + email);
+            // console.log("User email: " + email);
             setEmail('');
             setErrEmail('');
             setMessage("We have e-mailed your password reset link!")
