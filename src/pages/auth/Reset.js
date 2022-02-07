@@ -59,7 +59,6 @@ function Reset() {
                 setIsErrorMessage(false)
             })
             .catch(function (error) {
-                console.log("error check", error.response.data.message.toUpperCase())
                 setErrorMessage(error.response.data.message.toUpperCase());
                 setIsErrorMessage(true)
                 setIsSuccessMessage(false)
@@ -76,14 +75,13 @@ function Reset() {
             axios.post(API_BASE_URL + "/v1/password-reset", {auth:qAuth, password: password})
             .then(function (response) {
                 setShowEmailInputForm(false)
-                setShowPassResetForm(true)
+                setShowPassResetForm(false)
                 setSuccessMessage(response.data.message.toUpperCase())
                 setIsSuccessMessage(true)
                 setIsLoginButtonShowing(true)
                 setIsErrorMessage(false)
             })
             .catch(function (error) {
-                console.log("error check", error.response.data.message.toUpperCase())
                 setErrorMessage(error.response.data.message.toUpperCase());
                 setIsErrorMessage(true)
                 setIsSuccessMessage(false)

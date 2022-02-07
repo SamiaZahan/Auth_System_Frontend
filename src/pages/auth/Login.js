@@ -141,14 +141,6 @@ function Login() {
                                                 onBlur={e => setPhone(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
-                                         
-                                            {/* <PhoneInput
-                                                international
-                                                countryCallingCodeEditable={false}
-                                                defaultCountry="BD"
-                                                value={phoneNumber}
-                                                onChange={setPhone}
-                                                /> */}
                                             <label className="text-capitalize" htmlFor="name">Password<span
                                                 style={{color: "red"}}>*</span></label>
                                             <input
@@ -174,8 +166,8 @@ function Login() {
                                                 Sign In
                                             </button>
                                         </div>
-                                    </form>}
-
+                                    </form>
+                                    }
                                    
                                 </div>
                                 <div className="tab-pane fade" id="pills-profile" role="tabpanel"
@@ -183,15 +175,15 @@ function Login() {
                                     {!otpSent &&
                                     <form onSubmit={submitEmail}>
                                         <div className="form-group">
-                                            <label className="text-capitalize" htmlFor="name">Email <span
+                                            <label className="text-capitalize" htmlFor="name"> Email <span
                                                 style={{color: "red"}}>*</span></label>
                                             <input
-                                                type="email" className="form-control"
+                                                type="tel" className="form-control"
                                                 id="emailOrPhone"
-                                                onChange={e => setEmail(e.target.value)}
+                                                onBlur={e => setEmail(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
-                                             <label className="text-capitalize" htmlFor="name">Password<span
+                                            <label className="text-capitalize" htmlFor="name">Password<span
                                                 style={{color: "red"}}>*</span></label>
                                             <input
                                                 type="password" className="form-control"
@@ -200,26 +192,23 @@ function Login() {
                                                 required autoFocus autoComplete='off'
                                             />
                                             <div >
-                                            <Link to="/reset"
+                                                <Link to="/reset"
                                                     className="text-uppercase"
-                                                    style={{"paddingTop":"8rem","textDecoration":"none","font-size": ".8rem"}}>
+                                                    style={{"textDecoration":"none","font-size": ".8rem"}}>
                                                     Forgot Your Password?
                                                 </Link>
                                             </div>
-                                            
                                         </div>
 
                                         <div className="d-grid gap-2 mt-4 fst-normal"
-                                             style={{"font-size": ".1rem"}}>
+                                            style={{"font-size": ".1rem"}}>
                                             <button className="btn btn-block btn-custom text-white text-uppercase"
                                                     type="submit"
                                                     style={{background: "#1ba7f9"}}>
                                                 Sign In
                                             </button>
                                         </div>
-                                    </form>}
-
-                                   
+                                    </form>}   
                                 </div>
                             </div>
 
