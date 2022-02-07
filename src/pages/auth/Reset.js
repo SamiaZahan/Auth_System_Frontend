@@ -119,6 +119,7 @@ function Reset() {
                                     {/* <div className="text-danger">{errEmail}</div> */}
                                 </div>
 
+
                                 <div className="d-grid gap-2 mt-4 fst-normal" style={{"font-size": ".1rem"}}>
                                     <button className="btn btn-block text-white text-uppercase"
                                             style={{background: "#1ba7f9"}}>
