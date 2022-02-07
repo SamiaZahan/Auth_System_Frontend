@@ -160,8 +160,8 @@ function Login() {
                                              <div >
                                                 <Link to="/reset"
                                                     className="text-uppercase"
-                                                    style={{background: "#eceef0","font-size": ".8rem"}}>
-                                                    Forget  Password?
+                                                    style={{"textDecoration":"none","font-size": ".8rem"}}>
+                                                    Forgot Your Password?
                                                 </Link>
                                             </div>
                                         </div>
@@ -200,10 +200,10 @@ function Login() {
                                                 required autoFocus autoComplete='off'
                                             />
                                             <div >
-                                                <Link to="/reset"
+                                            <Link to="/reset"
                                                     className="text-uppercase"
-                                                    style={{background: "#eceef0","font-size": ".8rem"}}>
-                                                    Forget  Password?
+                                                    style={{"paddingTop":"8rem","textDecoration":"none","font-size": ".8rem"}}>
+                                                    Forgot Your Password?
                                                 </Link>
                                             </div>
                                             

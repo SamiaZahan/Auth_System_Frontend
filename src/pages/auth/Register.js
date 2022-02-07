@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../constants/ApiConstants";
 
 function Register() {
-    const [data, setData] = useState({first_name: '', last_name: '', email: '', password: ''});
+    const [data, setData] = useState({first_name: '', last_name: '', email: '', password: '', confirm_password: ''});
     const [startValidation, setStartValidation] = useState(false);
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -16,24 +16,28 @@ function Register() {
         if (action.type === 'set') {
             return { ...state, ...action.data }
         }
-    }, {first_name: '', last_name: '' , email: '', password: ''})
+    }, {first_name: '', last_name: '' , email: '', password: '', confirm_password: ''})
     const Registration = (e) => {
         e.preventDefault();
-        
-            axios.post(API_BASE_URL + '/v1/signup', data)
-            .then((result) => {
-                setSuccessMessage(result.data.message.toUpperCase())
-                setIsErrorMessage(false)
-                setIsSuccessMessage(true)
-                setIsFormShowing(false)
-            })
-            .catch((error) => {
-                setErrorMessage(error.response.data.message.toUpperCase());
+            if(data.password !== data.confirm_password){
+                setErrorMessage("Password and confirm password didn't match".toUpperCase());
                 setIsSuccessMessage(false)
                 setIsErrorMessage(true)
-            })
-        
-     
+            }
+            else{
+                axios.post(API_BASE_URL + '/v1/signup', data)
+                .then((result) => {
+                    setSuccessMessage(result.data.message.toUpperCase())
+                    setIsErrorMessage(false)
+                    setIsSuccessMessage(true)
+                    setIsFormShowing(false)
+                })
+                .catch((error) => {
+                    setErrorMessage(error.response.data.message.toUpperCase());
+                    setIsSuccessMessage(false)
+                    setIsErrorMessage(true)
+                })
+            }
     }
 
     const nameValidation = (val) => {
@@ -54,7 +58,8 @@ function Register() {
             (!nameValidation(data.first_name)) ? setError({ type: 'set', data: { first_name: 'Firstname should have minimum 2 letters(A-Za-z)' } }) : setError({ type: 'set', data: { first_name: null } });
             (!nameValidation(data.last_name)) ? setError({ type: 'set', data: { last_name: 'Lastname should have minimum 2 letters(A-Za-z)' } }) : setError({ type: 'set', data: { last_name: null } });
             (!isEmail(data.email)) ? setError({ type: 'set', data: { email: 'Please input a valid email' } }) : setError({ type: 'set', data: { email: null } });
-            (data.password.length<8)? setError({ type: 'set', data: { password: 'Please input a password more than 8 char' } }) : setError({ type: 'set', data: { password: null } });
+            (data.password.length<8)? setError({ type: 'set', data: { password: 'Please input a password more than 7 char' } }) : setError({ type: 'set', data: { password: null } });
+            (data.confirm_password.length<8)? setError({ type: 'set', data: { confirm_password: 'Please input more than 7 char' } }) : setError({ type: 'set', data: { confirm_password: null } });
         }
     }, [data, startValidation])
     return (
@@ -130,7 +135,19 @@ function Register() {
                                         {
                                              error.password &&
                                             <div className="text-danger">{error.password}</div>
-
+                                        }
+                                    </div>
+                                    <div className="form-group mb-3">
+                                        <label className="text-capitalize" htmlFor="password">Confirm Password <span style={{ color: "red" }}>*</span></label>
+                                        <input
+                                            type="password" className="form-control"
+                                            id="password" name="confirm_password" autoComplete="off"
+                                            onChange={onChange}
+                                            required
+                                        />
+                                        {
+                                             error.password &&
+                                            <div className="text-danger">{error.password}</div>
                                         }
                                     </div>
                                    
