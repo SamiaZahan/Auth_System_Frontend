@@ -55,7 +55,6 @@ function Verification() {
                 setIsErrorMessage(false)
             })
             .catch(function (error) {
-                console.log("error check", error.response.data)
                 setErrorMessage(error.response.data.message);
                 setIsErrorMessage(true)
                 setIsSuccessMessage(false)
@@ -85,7 +84,6 @@ function Verification() {
                 setIsErrorMessage(false)
             })
             .catch(function (error) {
-                console.log("error check", error.response.data)
                 setErrorMessage(error.response.data.message);
                 setIsErrorMessage(true)
                 setIsSuccessMessage(false)
