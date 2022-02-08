@@ -35,7 +35,7 @@ function Reset() {
             }
         }
         Verification()
-    }, [qAuth,successMessage,errorMessage])
+    }, [qAuth])
 
 
     const submitEmailInputForm = (e) => {
@@ -48,11 +48,23 @@ function Reset() {
                 setIsSuccessMessage(true)
                 setIsErrorMessage(false)
             })
-            .catch(function (error) {
+
+            
+            .catch((error) => {
+             if (error.response) {
+                console.log('Data',error.response.data);
                 setErrorMessage(error.response.data.message.toUpperCase());
-                setIsErrorMessage(true)
+                setShowPassResetForm(false)
+                setShowEmailInputForm(false)
                 setIsSuccessMessage(false)
-            });
+                setIsErrorMessage(true)
+            } else if (error.request) {
+                console.log('Request',error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            console.log('Config',error.config);
+            })
         } else {
             setErrorMessage("INPUT A VALID EMAIL");
             setIsErrorMessage(true)
