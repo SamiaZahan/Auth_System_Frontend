@@ -45,7 +45,7 @@ function Reset() {
         }
     }
         Verification()
-    }, [qAuth, qOtp])
+    }, [qAuth, qOtp,successMessage,errorMessage])
 
 
     const submitEmailInputForm = (e) => {
