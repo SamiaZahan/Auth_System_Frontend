@@ -21,14 +21,14 @@ function Reset() {
 
     useEffect(() => {
         const Verification = () => {
-            if (qAuth === null && successMessage === null && errorMessage === null){
+            if (qAuth === null){
                 setShowEmailInputForm(true)
                 setShowPassResetForm(false)
             }
             else{
                 setShowEmailInputForm(false)
                 setShowPassResetForm(true)
-                setIsSuccessMessage(true)
+                setIsSuccessMessage(false)
                 setIsErrorMessage(false)
     
             }
