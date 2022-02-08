@@ -27,25 +27,15 @@ function Reset() {
                 setShowPassResetForm(false)
             }
             else{
-            const verifyEmailData = {auth:qAuth, otp: qOtp};
-            axios.post(API_BASE_URL + '/v1/verify-email', verifyEmailData)
-                .then((result) => {
-                    setShowEmailInputForm(false)
-                    setShowPassResetForm(true)
-                    setIsSuccessMessage(true)
-                    setIsErrorMessage(false)
-                })
-                .catch(function (error) {
-                    setShowEmailInputForm(false)
-                    setShowPassResetForm(false)
-                    setErrorMessage("Email Verification failed".toUpperCase());
-                    setIsErrorMessage(true)
-                    setIsSuccessMessage(false)
-                })
+                setShowEmailInputForm(false)
+                setShowPassResetForm(true)
+                setIsSuccessMessage(true)
+                setIsErrorMessage(false)
+    
+            }
         }
-    }
         Verification()
-    }, [qAuth, qOtp,successMessage,errorMessage])
+    }, [qAuth,successMessage,errorMessage])
 
 
     const submitEmailInputForm = (e) => {
