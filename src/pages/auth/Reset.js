@@ -7,7 +7,6 @@ function Reset() {
     const history = useHistory();
     let q = new URLSearchParams(window.location.search)
     let qAuth = q.get("auth")
-    let qOtp = parseInt(q.get("otp"))
     const [email, setEmail] = useState("");
     const [password,setPassword]= useState("");
     const [confirmPassword, setConfirmPassword]= useState("");
