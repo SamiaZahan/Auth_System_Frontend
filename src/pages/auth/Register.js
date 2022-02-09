@@ -2,6 +2,8 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../constants/ApiConstants";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 function Register() {
     const [data, setData] = useState({first_name: '', last_name: '', email: '', password: '', confirm_password: ''});
@@ -11,6 +13,9 @@ function Register() {
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
     const [isFormShowing, setIsFormShowing] = useState(true);
+    const [passEyeShow, setPassEyeShow] = useState(false);
+    const [confirmPassEyeShow, setConfirmPassEyeShow] = useState(false)
+
 
     const [error, setError] = useReducer((state, action) => {
         if (action.type === 'set') {
@@ -51,6 +56,17 @@ function Register() {
     const onChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
         setStartValidation(true)
+    }
+
+    const passwordToggle = () =>{
+        passEyeShow? setPassEyeShow(false): setPassEyeShow(true)
+        var x = document.getElementById("password");
+        x.type === "password"? x.type = "text" :  x.type = "password"
+    }
+    const ConfirmPasswordToggle = () =>{
+        confirmPassEyeShow? setConfirmPassEyeShow(false): setConfirmPassEyeShow(true)
+          var x = document.getElementById("confirm_password");
+        x.type === "password"? x.type = "text" :  x.type = "password"
     }
 
     useEffect(() => {
@@ -125,13 +141,37 @@ function Register() {
                                         <div className="text-danger">{error.email}</div>
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label className="text-capitalize" htmlFor="password">Password <span style={{ color: "red" }}>*</span></label>
-                                        <input
-                                            type="password" className="form-control"
-                                            id="password" name="password" autoComplete="off"
-                                            onChange={onChange}
-                                            required
-                                        />
+                                       
+                                        <label className="text-capitalize" htmlFor="password">Password<span style={{ color: "red" }}>*</span></label>
+                                            <input
+                                                type="password" className="form-control"
+                                                id="password" name="password" autoComplete="off"
+                                                onChange={onChange}
+                                                required
+                                            />
+                                            {passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={passwordToggle}
+                                                            icon={faEye} />
+                                            }
+                                            {!passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={passwordToggle}
+                                                            icon={faEyeSlash} />
+                                            }
+                    
                                         {
                                              error.password &&
                                             <div className="text-danger">{error.password}</div>
@@ -141,10 +181,32 @@ function Register() {
                                         <label className="text-capitalize" htmlFor="password">Confirm Password <span style={{ color: "red" }}>*</span></label>
                                         <input
                                             type="password" className="form-control"
-                                            id="password" name="confirm_password" autoComplete="off"
+                                            id="confirm_password" name="confirm_password" autoComplete="off"
                                             onChange={onChange}
                                             required
                                         />
+                                         {confirmPassEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={ConfirmPasswordToggle}
+                                                            icon={faEye} />
+                                            }
+                                            {!confirmPassEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={ConfirmPasswordToggle}
+                                                            icon={faEyeSlash} />
+                                            }
                                         {
                                              error.password &&
                                             <div className="text-danger">{error.password}</div>

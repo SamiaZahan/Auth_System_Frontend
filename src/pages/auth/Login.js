@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {API_BASE_URL, LEGACY_WEBSITE_URL} from "../../constants/ApiConstants";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+
 
 function Login() {
     const isPhone = (value) => {
@@ -16,9 +19,11 @@ function Login() {
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
     const [otpSent] = useState(false);
+    const [passEyeShow, setPassEyeShow] = useState(false);
+
     
     const submitPhoneNumber = (e) => {
-        setIsErrorMessage(false)
+        setIsErrorMessage(false);
         e.preventDefault();        
         if(isPhone(phoneNumber)){
                 axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: phoneNumber,password: password, country_prefix: "880"})
@@ -55,7 +60,7 @@ function Login() {
 
     const submitEmail = (e) => {
         e.preventDefault();
-        setIsErrorMessage(false)
+        setIsErrorMessage(false);
         axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: email,password: password, country_prefix: ""})
                 .then((r) => {
                     console.log(r)
@@ -86,6 +91,23 @@ function Login() {
     }
     const onClick  =  () =>{
         setIsErrorMessage(false) ;
+        setPassEyeShow(false);
+        document.getElementById("password_phone").value="";
+        document.getElementById("password_email").value="";
+        document.getElementById("phone").value="";
+        document.getElementById("email").value="";
+
+    }
+
+    const phonePasswordToggle = () =>{
+        passEyeShow? setPassEyeShow(false): setPassEyeShow(true)
+        var x = document.getElementById("password_phone");
+        x.type === "password"? x.type = "text" :  x.type = "password"
+    }
+    const emailPasswordToggle = () =>{
+        passEyeShow? setPassEyeShow(false): setPassEyeShow(true)
+        var x = document.getElementById("password_email");
+        x.type === "password"? x.type = "text" :  x.type = "password"
     }
   
     return (
@@ -137,7 +159,7 @@ function Login() {
                                                style={{color: "red"}}>*</span></label>
                                             <input
                                                 type="tel" className="form-control"
-                                                id="emailOrPhone"
+                                                id="phone"
                                                 onBlur={e => setPhone(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
@@ -145,10 +167,32 @@ function Login() {
                                                 style={{color: "red"}}>*</span></label>
                                             <input
                                                 type="password" className="form-control"
-                                                id="password"
+                                                id="password_phone"
                                                 onChange={e => setPassword(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
+                                            {passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={phonePasswordToggle}
+                                                            icon={faEye} />
+                                            }
+                                            {!passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={phonePasswordToggle}
+                                                            icon={faEyeSlash} />
+                                            }
                                              <div >
                                                 <Link to="/reset"
                                                     className="text-uppercase"
@@ -179,7 +223,7 @@ function Login() {
                                                 style={{color: "red"}}>*</span></label>
                                             <input
                                                 type="tel" className="form-control"
-                                                id="emailOrPhone"
+                                                id="email"
                                                 onBlur={e => setEmail(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
@@ -187,10 +231,32 @@ function Login() {
                                                 style={{color: "red"}}>*</span></label>
                                             <input
                                                 type="password" className="form-control"
-                                                id="password"
+                                                id="password_email"
                                                 onChange={e => setPassword(e.target.value)}
                                                 required autoFocus autoComplete='off'
                                             />
+                                            {passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={emailPasswordToggle}
+                                                            icon={faEye} />
+                                            }
+                                            {!passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={emailPasswordToggle}
+                                                            icon={faEyeSlash} />
+                                            }
                                             <div >
                                                 <Link to="/reset"
                                                     className="text-uppercase"

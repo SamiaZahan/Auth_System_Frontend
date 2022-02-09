@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_BASE_URL} from "../../constants/ApiConstants";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 function Reset() {
     const history = useHistory();
@@ -14,9 +16,11 @@ function Reset() {
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isErrorMessage, setIsErrorMessage] = useState(false);
-    const [showEmailInputForm, setShowEmailInputForm] = useState(false)
-    const [showPassResetForm, setShowPassResetForm] = useState(false)
-    const [isLoginButtonShowing, setIsLoginButtonShowing] = useState(false)
+    const [showEmailInputForm, setShowEmailInputForm] = useState(false);
+    const [showPassResetForm, setShowPassResetForm] = useState(false);
+    const [isLoginButtonShowing, setIsLoginButtonShowing] = useState(false);
+    const [passEyeShow, setPassEyeShow] = useState(false);
+    const [confirmPassEyeShow, setConfirmPassEyeShow] = useState(false)
 
 
     useEffect(() => {
@@ -105,6 +109,17 @@ function Reset() {
         e.preventDefault()
         history.push('/login')
     }
+    const passwordToggle = () =>{
+        passEyeShow? setPassEyeShow(false): setPassEyeShow(true)
+        var x = document.getElementById("password");
+        x.type === "password"? x.type = "text" :  x.type = "password"
+    }
+    const ConfirmPasswordToggle = () =>{
+        confirmPassEyeShow? setConfirmPassEyeShow(false): setConfirmPassEyeShow(true)
+          var x = document.getElementById("confirm_password");
+        x.type === "password"? x.type = "text" :  x.type = "password"
+    }
+
 
     return (
             <div id="airbringr-background" className="container-fluid">
@@ -169,16 +184,60 @@ function Reset() {
                                             onChange={e => setPassword(e.target.value)}
                                             required autoFocus autoComplete='off'
                                         />
+                                           {passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={passwordToggle}
+                                                            icon={faEye} />
+                                            }
+                                            {!passEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={passwordToggle}
+                                                            icon={faEyeSlash} />
+                                            }
                                 </div>
                                 <div className="form-group mb-3">
                                     <label className="text-capitalize" htmlFor="name">Confirm Password<span
                                             style={{color: "red"}}>*</span></label>
                                         <input
                                             type="password" className="form-control"
-                                            id="password"
+                                            id="confirm_password"
                                             onChange={e => setConfirmPassword(e.target.value)}
                                             required autoFocus autoComplete='off'
                                         />
+                                           {confirmPassEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={ConfirmPasswordToggle}
+                                                            icon={faEye} />
+                                            }
+                                            {!confirmPassEyeShow&&
+                                           <FontAwesomeIcon style={{
+                                                                float: "right",
+                                                                marginRight: "15px",
+                                                                marginTop: "-33px",
+                                                                position: "relative",
+                                                                zIndex: "2"
+                                                            }} 
+                                                            onClick={ConfirmPasswordToggle}
+                                                            icon={faEyeSlash} />
+                                            }
                                 </div>
 
                                 <div className="d-grid gap-2 mt-4 fst-normal" style={{"font-size": ".1rem"}}>
