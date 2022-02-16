@@ -32,7 +32,9 @@ function Login() {
                         setSuccessMessage(r.data.message.toUpperCase());
                         setIsSuccessMessage(true)
                         setIsErrorMessage(false)
-                        if(r.data.data.code!== ""){
+                        console.log(r.data.data.code )
+                        if(r.data.data.code !== ""){
+                            console.log("inside the block")
                             window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
                         }
                     })
@@ -68,8 +70,11 @@ function Login() {
                     setSuccessMessage(r.data.message.toUpperCase());
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
-                    // window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
-                    
+                    console.log(r.data.data.code )
+                    if(r.data.data.code !== ""){
+                        console.log("inside the block")
+                        window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
+                    }                    
                     
                 })
                 .catch(err => {
