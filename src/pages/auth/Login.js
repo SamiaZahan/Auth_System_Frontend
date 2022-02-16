@@ -31,9 +31,9 @@ function Login() {
                         setSuccessMessage(r.data.message.toUpperCase());
                         setIsSuccessMessage(true)
                         setIsErrorMessage(false)
-                       
-                        window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
-                        
+                        if(r.data.data.code!= ""){
+                            window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
+                        }
                     })
                     .catch(err => {
                         
@@ -67,8 +67,7 @@ function Login() {
                     setSuccessMessage(r.data.message.toUpperCase());
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
-                 
-                    window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
+                    // window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
                     
                     
                 })
