@@ -28,10 +28,11 @@ function Login() {
         if(isPhone(phoneNumber)){
                 axios.post(API_BASE_URL + '/v1/login', {email_or_mobile: phoneNumber,password: password, country_prefix: "880"})
                     .then((r) => {
+                        console.log(r)
                         setSuccessMessage(r.data.message.toUpperCase());
                         setIsSuccessMessage(true)
                         setIsErrorMessage(false)
-                        if(r.data.data.code!= ""){
+                        if(r.data.data.code!== ""){
                             window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
                         }
                     })
