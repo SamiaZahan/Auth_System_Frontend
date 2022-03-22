@@ -35,6 +35,11 @@ function Navbar() {
                                 Sing In
                             </Link>
                         </li>
+                        <li className="nav-item col-6 col-md-auto">
+                            <Link className="nav-link p-2 text-white" to="/profile">
+                                View Profile
+                            </Link>
+                        </li>
                     </ul>
                     <a className="btn  mx-2 text-white"
                        href="#faq">FQA</a>

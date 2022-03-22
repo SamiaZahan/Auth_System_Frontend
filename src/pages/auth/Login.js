@@ -73,7 +73,8 @@ function Login() {
                     console.log(r.data.data.code )
                     if(r.data.data.code !== ""){
                         console.log("inside the block")
-                        window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
+                        localStorage.setItem('token', r.data.data.token);
+                        // window.location = LEGACY_WEBSITE_URL + '/helper/force-login/?code='+ r.data.data.code
                     }                    
                     
                 })
