@@ -33,6 +33,8 @@ const EditProfile = () => {
     const [newMobile, setNewMobile]=useState("");
     const [otp , setOtp]= useState("");
     const[otpMsg,setOptMsg]= useState("");
+    const[wrongOtpMsg, setWrongOtpMsg]=useState("");
+    const[wrongOtpMsgShow, setWrongOtpMsgShow]= useState(false);
     const[mobileVerifiedShow, setMobileVerifiedShow]= useState(false);
     const[mobileVerifiedMsg, setMobileVerifiedMsg] = useState("");
     const[submitOtpShow, setSubmitOtpShow]= useState(false);
@@ -52,8 +54,9 @@ const EditProfile = () => {
         })
         .then (function(res) {
             setUser(res.data.data.user);
-            setAddress(res.data.data.address);
             setUpdatedData(res.data.data.user)
+            setAddress(res.data.data.address);
+            setUpdatedAddress(res.data.data.address);
         })
         .catch((error) => {
             if(error.response!== undefined){
@@ -112,11 +115,12 @@ const EditProfile = () => {
 
     }  
     const onChange = (e) => {
-        setUpdatedData({ ...updatedData, [e.target.name]: e.target.value });
+        setUpdatedData({ ...updatedData, [e.target.name]: e.target.value ,["address"]:{ ...updatedAaddress}});
         // setStartValidation(true)
     }
     const onClick  = () =>  {
         console.log(updatedData);
+
         axios.post(API_BASE_URL + '/v1/edit-profile', updatedData,{
         headers: headers
         })
@@ -189,7 +193,9 @@ const EditProfile = () => {
     const emailPassFieldShow=()=>{
         setShowEmailPassField(true);
         setEmailPassError(false);
-        setEmailPassMatched(false)
+        setEmailPassMatched(false);
+        setWrongOtpMsgShow(false);
+        setSubmitOtpShow(false);
     }
     const mobilePassFieldShow=()=>{
         setShowMobilePassField(true);
@@ -232,7 +238,7 @@ const EditProfile = () => {
             setMobilePassMatched(false);
         })
         .catch((error)=>{
-            // setErrorMessage(error)
+            setErrorMessage(error.response.data.message.toUpperCase())
             setIsErrorMessage(true)
             setIsSuccessMessage(false)
             setMobilePassMatched(true);
@@ -248,6 +254,11 @@ const EditProfile = () => {
             setMobileVerifiedShow(true)
             setMobileVerifiedMsg(res.data.message.toUpperCase()+"AND UPDATED");
             setSubmitOtpShow(false);
+        })
+        .catch((error)=>{
+            setSubmitOtpShow(false);
+            setWrongOtpMsg(error.response.data.message.toUpperCase())
+            setWrongOtpMsgShow(true)
         })
     }
 
@@ -521,6 +532,13 @@ const EditProfile = () => {
                          Submit OTP
                      </button> 
                      </div> 
+                }
+                {
+                    wrongOtpMsgShow&&
+                    <div className="alert alert-danger  mb-3 mt-2 p-2 text-center" role="alert">
+                        {wrongOtpMsg}
+                    </div>
+
                 }
                 <br/>
                 <label className="text-capitalize ms-0" htmlFor="address">Address</label>
