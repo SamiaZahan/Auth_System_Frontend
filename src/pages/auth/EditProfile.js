@@ -8,6 +8,8 @@ import {API_BASE_URL} from "../../constants/ApiConstants";
 
 
 const EditProfile = () => {
+    const [isLoading,  setIsLoading]=useState(true);
+    const [formShow,  setFormShow]=useState(false);
     const [user, setUser] = useState({});
     const [address,  setAddress]= useState({});
     const [areas, setAreas]= useState([]);
@@ -15,7 +17,6 @@ const EditProfile = () => {
     const [divisionId, setDivisionId]= useState(null);
     const [districts, setDistricts]= useState([]);
     const [districtId, setDistrictId]= useState(null);
-    // const [zone, setZone]= useState(null);
     const [password,setPassword]= useState('');
     const [showEmailPassField , setShowEmailPassField] = useState(false);
     const [emailPassError , setEmailPassError] = useState(false);
@@ -57,6 +58,8 @@ const EditProfile = () => {
             setUpdatedData(res.data.data.user)
             setAddress(res.data.data.address);
             setUpdatedAddress(res.data.data.address);
+            setIsLoading(false);
+            setFormShow(true);
         })
         .catch((error) => {
             if(error.response!== undefined){
@@ -263,7 +266,18 @@ const EditProfile = () => {
     }
 
     return (
+        
         <div className="container-fluid p-5 d-flex justify-content-center" id="airbringr-background" style={{textAlign:'center'}}>
+             {
+                isLoading&&
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            }
+            {
+                formShow&&
             <div id="myform" className='col col-lg-6  col-md-8 col-sm-8  p-5 shadow bg-white rounded text-center' style={{textAlign:'left'}}>
                 {successMessage && isSuccessMessage &&
                     <div className="alert alert-success mb-3 mt-2 p-2 text-center" role="alert">
@@ -551,7 +565,7 @@ const EditProfile = () => {
                 <hr></hr>
                 <div class="row">
                     <div className="form-group mb-3 col-sm-12 col-md-6">
-                        <label className="text-capitalize ms-0" htmlFor="address">Division</label>
+                        <label className="text-capitalize ms-0" htmlFor="address" style={{backgroundColor: "white", top:"10px", position:"relative"}}>Division</label>
                         <select className="form-select py-2" aria-label="Default select example" id="division-filed" onChange={DivisionIdSet}>
             
                             <option value="" selected disabled>{division}</option>
@@ -561,7 +575,7 @@ const EditProfile = () => {
                         </select>
                     </div>
                     <div className="form-group mb-3 col-sm-12 col-md-6">
-                        <label className="text-capitalize ms-0" htmlFor="address">District</label>
+                        <label className="text-capitalize ms-0" htmlFor="address" style={{backgroundColor: "white", top:"10px", position:"relative"}}>District</label>
                         <select disabled className="form-select  py-2" aria-label="Default select example" id="district-field" onChange={DistrictIdSet}>
                             <option value="" selected disabled>{district}</option>
                                 {
@@ -570,7 +584,7 @@ const EditProfile = () => {
                         </select>
                     </div>
                 </div>
-                <label className="text-capitalize ms-0" htmlFor="address">Area</label>
+                <label className="text-capitalize ms-0" htmlFor="address" style={{backgroundColor: "white", top:"10px", position:"relative"}}>Area</label>
                     <select disabled className="form-select  py-2" aria-label="Default select example" id="area-field"  onChange={areaZoneSet}>
                     <option value="" selected disabled>{area}</option>
                         {
@@ -672,6 +686,7 @@ const EditProfile = () => {
                     </div>
                 </div>
             </div>
+            }
         </div>
     );
 };
