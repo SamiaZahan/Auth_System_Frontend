@@ -303,12 +303,18 @@ const EditProfile = () => {
                     <div className="form-group mb-3 col-sm-12 col-md-6">
                         <label className="text-capitalize ms-0" htmlFor="gender">Gender</label>
                         <input
+                            list='genderGroup'
                             type="text" className="form-control"
                             id="gender" name="gender"
                             placeholder={gender}
                             onChange={onChange}                    
                             autoFocus required autoComplete="off"
                         />
+                         <datalist id="genderGroup">
+                            <option value="Male"/>
+                            <option value="Female"/>
+                            <option value="Other"/>
+                        </datalist>
                     </div>
                     <div className="form-group mb-3 col-sm-12 col-md-6">
                         <label className="text-capitalize ms-0" htmlFor="age">Age</label>
@@ -541,21 +547,30 @@ const EditProfile = () => {
 
                 }
                 <br/>
-                <label className="text-capitalize ms-0" htmlFor="address">Address</label>
-                <br/><br/>
-                <select className="form-select py-2" aria-label="Default select example" id="division-filed" onChange={DivisionIdSet}>
-                    <option value="" selected disabled>{division}</option>
-                        {
-                        divisions.map(division=><option value={division.id}>{division.name}</option>
-                        )}
-                </select><br/>
-                <select disabled className="form-select  py-2" aria-label="Default select example" id="district-field" onChange={DistrictIdSet}>
-                    <option value="" selected disabled>{district}</option>
-                        {
-                        districts.filter(elements=>elements.division_id===divisionId).map(district=><option value={district.id}>{district.name}</option>
-                        )}
-                </select>
-                <br/>
+                <label className="text-capitalize ms-0" htmlFor="address"><b>Address</b></label>
+                <hr></hr>
+                <div class="row">
+                    <div className="form-group mb-3 col-sm-12 col-md-6">
+                        <label className="text-capitalize ms-0" htmlFor="address">Division</label>
+                        <select className="form-select py-2" aria-label="Default select example" id="division-filed" onChange={DivisionIdSet}>
+            
+                            <option value="" selected disabled>{division}</option>
+                                {
+                                divisions.map(division=><option value={division.id}>{division.name}</option>
+                                )}
+                        </select>
+                    </div>
+                    <div className="form-group mb-3 col-sm-12 col-md-6">
+                        <label className="text-capitalize ms-0" htmlFor="address">District</label>
+                        <select disabled className="form-select  py-2" aria-label="Default select example" id="district-field" onChange={DistrictIdSet}>
+                            <option value="" selected disabled>{district}</option>
+                                {
+                                districts.filter(elements=>elements.division_id===divisionId).map(district=><option value={district.id}>{district.name}</option>
+                                )}
+                        </select>
+                    </div>
+                </div>
+                <label className="text-capitalize ms-0" htmlFor="address">Area</label>
                     <select disabled className="form-select  py-2" aria-label="Default select example" id="area-field"  onChange={areaZoneSet}>
                     <option value="" selected disabled>{area}</option>
                         {
@@ -564,6 +579,7 @@ const EditProfile = () => {
                         )}
                     </select>
                 <br/>
+                <label className="text-capitalize ms-0" htmlFor="address">Other Description</label>
                 <input
                     disabled
                     type="text" className="form-control"
