@@ -33,17 +33,16 @@ const EditProfile = () => {
     const [newEmail, setNewEmail]=useState("");
     const [newMobile, setNewMobile]=useState("");
     const [otp , setOtp]= useState("");
-    const[otpMsg,setOptMsg]= useState("");
-    const[wrongOtpMsg, setWrongOtpMsg]=useState("");
-    const[wrongOtpMsgShow, setWrongOtpMsgShow]= useState(false);
-    const[mobileVerifiedShow, setMobileVerifiedShow]= useState(false);
-    const[mobileVerifiedMsg, setMobileVerifiedMsg] = useState("");
-    const[submitOtpShow, setSubmitOtpShow]= useState(false);
+    const [otpMsg,setOptMsg]= useState("");
+    const [wrongOtpMsg, setWrongOtpMsg]=useState("");
+    const [wrongOtpMsgShow, setWrongOtpMsgShow]= useState(false);
+    const [mobileVerifiedShow, setMobileVerifiedShow]= useState(false);
+    const [mobileVerifiedMsg, setMobileVerifiedMsg] = useState("");
+    const [submitOtpShow, setSubmitOtpShow]= useState(false);
     const {image, first_name,last_name, gender, email, mobile, age}= user
     const {division,district,area, text,zone}=address;
     const [updatedData, setUpdatedData] = useState({first_name, last_name, gender, address:{division:'', district:'', area:'', text:'',zone:''}});
     const [updatedAaddress, setUpdatedAddress] =  useState({division:'', district:'', area:'',text:'',zone:'' });
-
     const Token=localStorage.getItem('token');
     const headers = {'Authorization': `Bearer ${Token}`};
    
@@ -90,8 +89,8 @@ const EditProfile = () => {
         setUpdatedAddress({...updatedAaddress,['division']: div.name})
         setUpdatedData({...updatedData,['address']:updatedAaddress});
         document.getElementById('district-field').removeAttribute("disabled");
+        
     }
-    console.log(updatedData);
     const DistrictIdSet = (e)=>{
         setDistrictId(e.target.value);
         const  dis  =  districts.find(elem=>elem.id===e.target.value)
@@ -141,7 +140,6 @@ const EditProfile = () => {
         })   
         
     }
-
     const emailPassVerify= () => {
         setPassword(document.getElementById('password').value)
         axios.post(API_BASE_URL + '/v1/verify-password', {password},{
@@ -204,6 +202,8 @@ const EditProfile = () => {
         setShowMobilePassField(true);
         setMobilePassError(false);
         setMobilePassMatched(false)
+        setWrongOtpMsgShow(false);
+        setSubmitOtpShow(false);
     }
     const submitEmail=()=>{
        
@@ -266,7 +266,6 @@ const EditProfile = () => {
     }
 
     return (
-        
         <div className="container-fluid p-5 d-flex justify-content-center" id="airbringr-background" style={{textAlign:'center'}}>
              {
                 isLoading&&
@@ -593,7 +592,7 @@ const EditProfile = () => {
                         )}
                     </select>
                 <br/>
-                <label className="text-capitalize ms-0" htmlFor="address">Other Description</label>
+                <label className="text-capitalize ms-0" htmlFor="address">Detail Address</label>
                 <input
                     disabled
                     type="text" className="form-control"
@@ -668,7 +667,7 @@ const EditProfile = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                  </div>
                 <div class="modal fade" id="emailVerifyAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -684,7 +683,7 @@ const EditProfile = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+              </div>
             </div>
             }
         </div>

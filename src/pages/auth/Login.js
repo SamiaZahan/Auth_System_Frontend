@@ -143,7 +143,7 @@ function Login() {
                                             data-bs-target="#pills-home" type="button" role="tab"
                                             aria-controls="pills-home" 
                                             onClick={onClick}
-                                            aria-selected="true">Mobile Number
+                                            aria-selected="true">Mobile
                                     </button>
                                 </li>
                                 <li style={{width: "50%"}} className="nav-item" role="presentation">
