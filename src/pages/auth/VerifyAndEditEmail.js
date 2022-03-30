@@ -14,12 +14,11 @@ function VerifyAndEditEmail() {
     const [isErrorMessage, setIsErrorMessage] = useState(false);
     const [isLoginButtonShowing, setIsLoginButtonShowing] = useState(false)
     const Token=localStorage.getItem('token');
-    const headers = {'Authorization': `Bearer ${Token}`};
     useEffect(() => {
         const Verification = () => {
             const verifyEmailData = {auth:qAuth, otp: qOtp};
             axios.post(API_BASE_URL + '/v1/verify-and-update-email', verifyEmailData,{
-                headers: headers
+                headers: {'Authorization': `Bearer ${Token}`}
                 })
                 .then((result) => {
                     setSuccessMessage(result.data.message)
@@ -35,7 +34,7 @@ function VerifyAndEditEmail() {
                 })
         }
         Verification()
-    }, [qAuth, qOtp])
+    }, [qAuth, qOtp,Token])
     const goToLogin = (e) => {
         e.preventDefault()
         history.push('/login')

@@ -40,7 +40,7 @@ const EditProfile = () => {
     const [mobileVerifiedMsg, setMobileVerifiedMsg] = useState("");
     const [submitOtpShow, setSubmitOtpShow]= useState(false);
     const {image, first_name,last_name, gender, email, mobile, age}= user
-    const {division,district,area, text,zone}=address;
+    const {division,district,area, text}=address;
     const [updatedData, setUpdatedData] = useState({first_name, last_name, gender, address:{division:'', district:'', area:'', text:'',zone:''}});
     const [updatedAaddress, setUpdatedAddress] =  useState({division:'', district:'', area:'',text:'',zone:'' });
     const Token=localStorage.getItem('token');
@@ -50,7 +50,7 @@ const EditProfile = () => {
     useEffect(() => {
         
         axios.get(API_BASE_URL + '/v1/view-profile', {
-        headers: headers
+        headers: {'Authorization': `Bearer ${Token}`}
         })
         .then (function(res) {
             setUser(res.data.data.user);
@@ -72,7 +72,7 @@ const EditProfile = () => {
                 setIsSuccessMessage(false)
             }
         })    
-    },{user});
+    },[Token]);
     
     useEffect(() => {
         fetch('./Division.JSON')
@@ -86,16 +86,16 @@ const EditProfile = () => {
     const DivisionIdSet = (e)=>{
         setDivisionId (e.target.value);
         const  div=  divisions.find(elem=>elem.id===e.target.value)
-        setUpdatedAddress({...updatedAaddress,['division']: div.name})
-        setUpdatedData({...updatedData,['address']:updatedAaddress});
+        setUpdatedAddress({...updatedAaddress,'division': div.name})
+        setUpdatedData({...updatedData,'address':updatedAaddress});
         document.getElementById('district-field').removeAttribute("disabled");
         
     }
     const DistrictIdSet = (e)=>{
         setDistrictId(e.target.value);
         const  dis  =  districts.find(elem=>elem.id===e.target.value)
-        setUpdatedAddress({...updatedAaddress,['district']: dis.name});
-        setUpdatedData({...updatedData,['address']:updatedAaddress});
+        setUpdatedAddress({...updatedAaddress,'district': dis.name});
+        setUpdatedData({...updatedData,'address':updatedAaddress});
         document.getElementById('area-field').removeAttribute("disabled");
     }
     const areaZoneSet=(e)=> {
@@ -104,20 +104,20 @@ const EditProfile = () => {
         if  (zone>6){
             zone='courier'
         }        
-        setUpdatedAddress({...updatedAaddress,['area']:e.target.value,['zone']: zone});
-        setUpdatedData({...updatedData,['address']:updatedAaddress});
+        setUpdatedAddress({...updatedAaddress,'area':e.target.value,'zone': zone});
+        setUpdatedData({...updatedData,'address':updatedAaddress});
 
         document.getElementById('address-text').removeAttribute("disabled");        
     }
     const addressTextSet=()=>{
         const  addressText=  document.getElementById('address-text').value;        
-        setUpdatedAddress({...updatedAaddress,['text']:  addressText});
-        setUpdatedData({...updatedData,['address']:updatedAaddress});
+        setUpdatedAddress({...updatedAaddress,'text':  addressText});
+        setUpdatedData({...updatedData,'address':updatedAaddress});
 
 
     }  
     const onChange = (e) => {
-        setUpdatedData({ ...updatedData, [e.target.name]: e.target.value ,["address"]:{ ...updatedAaddress}});
+        setUpdatedData({ ...updatedData, [e.target.name]: e.target.value ,'address':{ ...updatedAaddress}});
         // setStartValidation(true)
     }
     const onClick  = () =>  {
@@ -402,7 +402,7 @@ const EditProfile = () => {
                                             icon={faEyeSlash} />
                             }
                     <br/>
-                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" type="submit" style={{ background: "#1ba7f9" }} 
+                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" style={{ background: "#1ba7f9" }} 
                     type="button" onClick={emailPassVerify}>
                         Verify
                     </button> 
@@ -426,10 +426,10 @@ const EditProfile = () => {
                         placeholder="Enter New Email"
                         onBlur={(e)=>{setNewEmail(e.target.value)}}
                         required
-                        autoFocus required autoComplete="off"
+                        autoComplete="off"
                     />
                     <br/>
-                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" type="submit" style={{ background: "#1ba7f9" }} 
+                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" style={{ background: "#1ba7f9" }} 
                     type="button" onClick={submitEmail} data-bs-toggle="modal" data-bs-target="#emailVerifyAlert">
                         Submit Email
                     </button> 
@@ -496,7 +496,7 @@ const EditProfile = () => {
                                             icon={faEyeSlash} />
                             }
                     <br/>
-                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" type="submit" style={{ background: "#1ba7f9" }} 
+                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" style={{ background: "#1ba7f9" }} 
                     type="button" onClick={mobilePassVerify}>
                         Verify
                     </button> 
@@ -520,10 +520,10 @@ const EditProfile = () => {
                         placeholder="Enter new mobile"
                         onBlur={(e)=>{setNewMobile(e.target.value)}}
                         required
-                        autoFocus required autoComplete="off"
+                        autoComplete="off"
                     />
                     <br/>
-                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" type="submit" style={{ background: "#1ba7f9" }} 
+                    <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" style={{ background: "#1ba7f9" }} 
                     type="button" onClick={submitMobile} >
                         Submit Mobile
                     </button> 
@@ -540,13 +540,13 @@ const EditProfile = () => {
                          placeholder="Enter the OTP"
                          onBlur={(e)=>{setOtp(e.target.value)}}
                          required
-                         autoFocus required autoComplete="off"
+                         autoComplete="off"
                      />
                      <div className="alert alert-success mb-3 mt-2 p-2 text-center" role="alert">
                         {otpMsg}
                     </div>
                      <br/>
-                     <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" type="submit" style={{ background: "#1ba7f9" }} 
+                     <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" style={{ background: "#1ba7f9" }} 
                      type="button" onClick={submitOtp} >
                          Submit OTP
                      </button> 
@@ -602,7 +602,7 @@ const EditProfile = () => {
                     autoFocus required autoComplete="off"
                 />
                 <br/>
-                <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100" type="submit" style={{ background: "#1ba7f9" }} 
+                <button className="btn btn-custom btn-block text-white text-uppercase px-5 w-100"  style={{ background: "#1ba7f9" }} 
                  type="button" data-bs-toggle="modal" data-bs-target="#editSaveAlert">
                      Save
                 </button>
