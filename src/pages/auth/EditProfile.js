@@ -50,7 +50,7 @@ const EditProfile = () => {
     useEffect(() => {
         
         axios.get(API_BASE_URL + '/v1/view-profile', {
-        headers: {'Authorization': `Bearer ${Token}`}
+        headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
         })
         .then (function(res) {
             setUser(res.data.data.user);
@@ -124,7 +124,7 @@ const EditProfile = () => {
         console.log(updatedData);
 
         axios.post(API_BASE_URL + '/v1/edit-profile', updatedData,{
-        headers: headers
+        headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}
         })
         .then (function(res) {
             setSuccessMessage(res.data.message.toUpperCase())
@@ -233,7 +233,7 @@ const EditProfile = () => {
     const submitMobile=()=>{
         // console.log(newMobile)
         axios.post(API_BASE_URL + '/v1/edit-mobile-send-otp', {"mobile":newMobile},{
-            headers: headers
+            headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
         })
         .then(function(res){
             setOptMsg(res.data.message.toUpperCase());
