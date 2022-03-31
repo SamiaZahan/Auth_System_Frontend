@@ -73,7 +73,7 @@ function Verification() {
             alert("Please input the OTP")
         }
 
-        axios.post(API_BASE_URL + "/v1/verify-mobile", {mobile, otp: parseInt(otp), auth: qAuth, state:'signup'})
+        axios.post(API_BASE_URL + "/v1/verify-mobile", {mobile, otp: parseInt(otp), auth: qAuth})
             .then(function (response) {
                 console.log("verify message", response.data)
                 setShowVerificationForm(false)

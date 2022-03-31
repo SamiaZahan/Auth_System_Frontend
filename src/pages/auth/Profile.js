@@ -21,7 +21,6 @@ const Profile = () => {
         headers: headers
         })
         .then (res => {
-            // console.log(res);
             setUser(res.data.data.user);
             setAddress(res.data.data.address);
             setIsLoading(false);
