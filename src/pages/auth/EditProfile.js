@@ -250,7 +250,7 @@ const EditProfile = () => {
         })
     }
     const submitOtp=()=>{
-        axios.post(API_BASE_URL + '/v1/verify-and-update-mobile', {"mobile":newMobile,otp: parseInt(otp), auth: "", state:'edit'},{
+        axios.post(API_BASE_URL + '/v1/verify-and-update-mobile', {"mobile":newMobile,otp: parseInt(otp)},{
             headers: headers
         })
         .then(function(res){
