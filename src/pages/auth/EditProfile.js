@@ -217,15 +217,13 @@ const EditProfile = () => {
             setIsErrorMessage(false)
             setIsSuccessMessage(true)
             setEmailPassMatched(false);
-            console.log(res)
         })
         .catch((error) => {
-            setErrorMessage(error.response.data.errors.email.toUpperCase())
+            console.log(error.response.data.message)
+            setErrorMessage(error.response.data.message.toUpperCase())
             setIsErrorMessage(true)
             setIsSuccessMessage(false)
-            setModalText("Please enter a valid email address")
-
-             console.log(error.response.data.errors.email.toUpperCase())  
+            setModalText(error.response.data.message.toUpperCase() +". "+ "Please enter a valid email address".toUpperCase())
         }) 
 
         
