@@ -25,6 +25,7 @@ function VerifyAndEditEmail() {
                     setIsSuccessMessage(true)
                     setIsErrorMessage(false)
                     setIsLoginButtonShowing(true);
+                    localStorage.removeItem('token');
                 })
                 .catch(function (error) {
                     console.log("error check", error.response.data)

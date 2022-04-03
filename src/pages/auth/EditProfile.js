@@ -223,7 +223,7 @@ const EditProfile = () => {
             setErrorMessage(error.response.data.message.toUpperCase())
             setIsErrorMessage(true)
             setIsSuccessMessage(false)
-            setModalText(error.response.data.message.toUpperCase() +". "+ "Please enter a valid email address".toUpperCase())
+            setModalText(error.response.data.message.toUpperCase())
         }) 
 
         
