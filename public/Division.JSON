@@ -3522,6 +3522,13 @@
             "area": "Rampura",
             "zone": "6"
         }, 
+     {
+            "division_id": "3",
+            "district_id": "1",
+            "upazila": "Khilgaon",
+            "area": "Khilgaon",
+            "zone": "5"
+        }, 
     {
             "division_id": "3",
             "district_id": "1",
